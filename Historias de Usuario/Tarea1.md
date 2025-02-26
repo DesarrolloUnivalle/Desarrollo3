@@ -1,7 +1,11 @@
 ### **Requisitos Funcionales**
 | ID    | Historia de Usuario | Criterios de Aceptación |
 |-------|---------------------|-------------------------|
-| US-01 | Como usuario, quiero poder registrarme en la aplicación con mi correo electrónico y una contraseña, para poder acceder a mis propiedades y administrar mis anuncios. | - El usuario debe ingresar un correo válido y una contraseña con al menos 8 caracteres.  <br> - Si el correo ya está registrado, se debe mostrar un mensaje de error. <br> - Tras el registro exitoso, el usuario debe recibir un correo de confirmación. <br> - El usuario debe ser redirigido a la página de inicio de sesión después del registro exitoso. |
+| US-01 | Como usuario, quiero poder registrarme en la plataforma de eCommerce con mi correo electrónico y una contraseña, para poder realizar compras y acceder a mi historial de pedidos. | - El usuario debe ingresar un correo válido y una contraseña con al menos 8 caracteres.  <br> - Si el correo ya está registrado, se debe mostrar un mensaje de error. <br> - Tras el registro exitoso, el usuario debe recibir un correo de confirmación. <br> - El usuario debe ser redirigido a la página de inicio de sesión después del registro exitoso. |
+| US-02 | Como usuario, quiero poder realizar pagos de mis compras con diferentes métodos de pago, para tener flexibilidad al momento de pagar. | - El sistema debe permitir pagos con tarjeta de crédito, débito y PayPal. <br> - El usuario debe poder ingresar y guardar su método de pago para futuras compras. <br> - Si el pago es exitoso, se debe mostrar una confirmación y enviar un correo con el recibo. <br> - Si el pago falla, se debe mostrar un mensaje de error claro con la opción de reintentar. |
+| US-03 | Como administrador, quiero poder asignar roles a los usuarios, para gestionar los permisos dentro de la plataforma. | - El sistema debe permitir asignar roles como "Cliente", "Vendedor" y "Administrador". <br> - Solo los administradores pueden cambiar los roles de otros usuarios. <br> - Los clientes solo pueden comprar productos, mientras que los vendedores pueden publicar y administrar sus productos. <br> - Los administradores pueden gestionar productos, usuarios y pedidos en la plataforma. |
+
+
 
 ### **Historias de Calidad**
 | | | |  | | |  |
