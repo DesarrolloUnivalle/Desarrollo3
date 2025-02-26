@@ -1,3 +1,7 @@
+### **Requisitos Funcionales**
+| ID    | Historia de Usuario | Criterios de Aceptación |
+|-------|---------------------|-------------------------|
+| US-01 | Como usuario, quiero poder registrarme en la aplicación con mi correo electrónico y una contraseña, para poder acceder a mis propiedades y administrar mis anuncios. | - El usuario debe ingresar un correo válido y una contraseña con al menos 8 caracteres.  <br> - Si el correo ya está registrado, se debe mostrar un mensaje de error. <br> - Tras el registro exitoso, el usuario debe recibir un correo de confirmación. <br> - El usuario debe ser redirigido a la página de inicio de sesión después del registro exitoso. |
 
 ### **Historias de Calidad**
 | | | |  | | |  |
