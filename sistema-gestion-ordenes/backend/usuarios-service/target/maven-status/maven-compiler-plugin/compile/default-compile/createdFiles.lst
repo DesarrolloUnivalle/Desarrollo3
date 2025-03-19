@@ -1,0 +1,9 @@
+com\tienda\usuarios\repository\UserRepository.class
+com\tienda\usuarios\TiendaUsuariosApplication.class
+com\tienda\usuarios\repository\RoleRepository.class
+com\tienda\usuarios\controller\UserController.class
+com\tienda\usuarios\controller\HomeController.class
+com\tienda\usuarios\config\SecurityConfig.class
+com\tienda\usuarios\model\Role.class
+com\tienda\usuarios\service\UserService.class
+com\tienda\usuarios\model\User.class
