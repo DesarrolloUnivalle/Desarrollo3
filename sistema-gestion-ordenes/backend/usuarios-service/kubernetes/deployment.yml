@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usuarios-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: usuarios-service
+  template:
+    metadata:
+      labels:
+        app: usuarios-service
+    spec:
+      containers:
+        - name: usuarios-service
+          image: $DOCKER_USERNAME/usuarios-service:latest
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
