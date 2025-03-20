@@ -30,7 +30,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f usuarios-service/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f sistema-gestion-ordenes/backend/usuarios-service/Dockerfile .
           docker push ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest
 
       - name: Authenticate with Google Cloud
@@ -49,6 +49,6 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          sed -i "s|\$DOCKER_USERNAME|${DOCKER_USERNAME}|g" usuarios-service/kubernetes/deployment.yml
-          kubectl apply -f usuarios-service/kubernetes/deployment.yml
-          kubectl apply -f usuarios-service/kubernetes/service.yml
+          sed -i "s|\$DOCKER_USERNAME|${DOCKER_USERNAME}|g" sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
+          kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
+          kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/service.yml
