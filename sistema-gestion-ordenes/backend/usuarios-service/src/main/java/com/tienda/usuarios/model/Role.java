@@ -13,4 +13,8 @@ public class Role {
     private Integer id;
 
     private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
 }

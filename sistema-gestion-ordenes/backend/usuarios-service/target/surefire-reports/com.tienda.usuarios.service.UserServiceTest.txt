@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.tienda.usuarios.service.UserServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.381 s <<< FAILURE! -- in com.tienda.usuarios.service.UserServiceTest
+com.tienda.usuarios.service.UserServiceTest.testRegistrarUsuario_Exitoso -- Time elapsed: 2.301 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.tienda.usuarios.model.Role.getNombre()" because the return value of "com.tienda.usuarios.dto.UserRequestDTO.getRol()" is null
+	at com.tienda.usuarios.service.UserService.registrarUsuario(UserService.java:57)
+	at com.tienda.usuarios.service.UserServiceTest.testRegistrarUsuario_Exitoso(UserServiceTest.java:85)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+
