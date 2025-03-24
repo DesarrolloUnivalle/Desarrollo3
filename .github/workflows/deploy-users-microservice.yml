@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - main
   pull_request:
     branches: 
       - develop
@@ -22,7 +21,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          
+
       - name: Run Tests with Maven
         run: mvn test -f sistema-gestion-ordenes/backend/usuarios-service/pom.xml
 
@@ -37,7 +36,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f sistema-gestion-ordenes/backend/usuarios-service/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f sistema-gestion-ordenes/backend/usuarios-service/Dockerfile sistema-gestion-ordenes/backend/usuarios-service/
           docker push ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest
 
       - name: Authenticate with Google Cloud
