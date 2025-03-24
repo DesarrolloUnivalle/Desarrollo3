@@ -2,9 +2,12 @@ name: Deploy Users Microservice
 
 on:
   push:
-    branches: [ "feat/usuarios" ]
+    branches:
+      - develop
   pull_request:
-    branches: [ "develop" ]
+    branches: 
+      - develop
+      - main
 
 jobs:
   build-and-deploy:
@@ -16,11 +19,14 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
+      - name: Run Tests with Maven
+        run: mvn test -f sistema-gestion-ordenes/backend/usuarios-service/pom.xml
+
       - name: Build with Maven
-        run: mvn clean package -DskipTests -f sistema-gestion-ordenes/backend/usuarios-service/pom.xml
+        run: mvn clean package -f sistema-gestion-ordenes/backend/usuarios-service/pom.xml
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -30,14 +36,13 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f sistema-gestion-ordenes/backend/usuarios-service/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest -f sistema-gestion-ordenes/backend/usuarios-service/Dockerfile sistema-gestion-ordenes/backend/usuarios-service/
           docker push ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest
 
       - name: Authenticate with Google Cloud
-        run: |
-          echo "${{ secrets.GCP_SA_KEY }}" > gcp-key.json
-          gcloud auth activate-service-account --key-file=gcp-key.json
-          gcloud config set project helpful-spider-445913-v9
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Configure Kubernetes
         env:
