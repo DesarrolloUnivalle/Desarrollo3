@@ -44,9 +44,9 @@ public class JwtUtil {
         }
     }
     
-    private boolean isTokenExpired(String token) {
-        return extractClaim(token, Claims::getExpiration).before(new Date());
-    }
+    // private boolean isTokenExpired(String token) {
+    //     return extractClaim(token, Claims::getExpiration).before(new Date());
+    // }
     // Obtener el usuario desde el token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

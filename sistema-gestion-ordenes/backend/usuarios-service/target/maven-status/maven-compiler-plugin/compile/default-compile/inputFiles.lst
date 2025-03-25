@@ -1,33 +1,19 @@
-<<<<<<< HEAD
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\config\SecurityConfig.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\AuthController.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\HomeController.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\UserController.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\AuthRequestDTO.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\AuthResponseDTO.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserRequestDTO.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserResponseDTO.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\Role.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\User.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\RoleRepository.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\UserRepository.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\AuthFilter.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\JwtAuthFilter.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\JwtUtil.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\AuthService.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\UserDetailsServiceImpl.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\UserService.java
-C:\Users\Juan Pablo Castaño A\Downloads\Semestre 7\Desarrollo3 PROYECTO\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\TiendaUsuariosApplication.java
-=======
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\config\SecurityConfig.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\HomeController.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\UserController.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserRequestDTO.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserResponseDTO.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\Role.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\User.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\RoleRepository.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\UserRepository.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\UserService.java
-C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\TiendaUsuariosApplication.java
->>>>>>> 69f51eec509d70ac978f44ed516f3304d2730625
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\AuthFilter.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\UserService.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\AuthRequestDTO.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\UserDetailsServiceImpl.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\Role.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\UserRepository.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserResponseDTO.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\JwtUtil.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\config\SecurityConfig.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\security\JwtAuthFilter.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\AuthResponseDTO.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\service\AuthService.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\HomeController.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\model\User.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\dto\UserRequestDTO.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\AuthController.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\repository\RoleRepository.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\controller\UserController.java
+C:\Users\Alejandro\Desktop\Semestre 7\5. DESARROLLO_DE_SOFTWARE_III\Desarrollo_III\Desarrollo3\sistema-gestion-ordenes\backend\usuarios-service\src\main\java\com\tienda\usuarios\TiendaUsuariosApplication.java
