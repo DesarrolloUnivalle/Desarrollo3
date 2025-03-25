@@ -42,9 +42,17 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        UserResponseDTO response = new UserResponseDTO();
+        response.setId(user.getId());
+        response.setNombre(user.getNombre());
+        response.setEmail(user.getEmail());
+        response.setRol(user.getRol().getNombre());
+        
+        return response;
     }
     
     public UserResponseDTO registrarUsuario(UserRequestDTO request) {

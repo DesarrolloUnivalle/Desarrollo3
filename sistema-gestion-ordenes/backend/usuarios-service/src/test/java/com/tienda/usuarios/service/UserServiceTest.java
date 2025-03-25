@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ class UserServiceTest {
         adminRole.setId(1);
         adminRole.setNombre("Admin");
     
-        when(roleRepository.findAll()).thenReturn(List.of(adminRole));
+        when(roleRepository.findAll()).thenReturn(Arrays.asList(adminRole));
         when(roleRepository.findByNombre("Admin")).thenReturn(Optional.of(adminRole));
     }
 }
