@@ -3,7 +3,6 @@ package com.tienda.usuarios.config;
 import com.tienda.usuarios.security.AuthFilter;
 import com.tienda.usuarios.security.JwtAuthFilter;
 import com.tienda.usuarios.security.JwtUtil;
-import com.tienda.usuarios.service.UserDetailsServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -51,7 +49,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())  // Desactiva CSRF
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register").permitAll() // Permitir acceso sin token a login y registro
+                .requestMatchers("/auth/login", "/auth/register", "/").permitAll() // Permitir acceso sin token a login y registro
                 .requestMatchers("/usuarios/").authenticated() // Protege los endpoints de usuarios
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
