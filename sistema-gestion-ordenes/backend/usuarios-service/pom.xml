@@ -79,14 +79,12 @@
         <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>42.7.5</version> <!-- Versión actualizada para solucionar vulnerabilidades -->
         </dependency>
 
         <!-- Jakarta -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
         </dependency>
 
         <dependency>
@@ -126,16 +124,38 @@
     </dependencies>
 
     <build>
-    <plugins>
-        <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-            <version>${spring-boot.version}</version>
-            <configuration>
-                <mainClass>com.tienda.usuarios.TiendaUsuariosApplication</mainClass>
-            </configuration>
+        <plugins>
+            <!-- Plugin para Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.tienda.usuarios.TiendaUsuariosApplication</mainClass>
+                </configuration>
+            </plugin>
 
-        </plugin>
-    </plugins>
-</build>
+            <!-- Plugin para asegurar un JAR ejecutable -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.tienda.usuarios.TiendaUsuariosApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
