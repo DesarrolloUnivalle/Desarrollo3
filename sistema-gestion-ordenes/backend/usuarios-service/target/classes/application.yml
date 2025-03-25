@@ -1,8 +1,9 @@
 spring:
   security:
-      user:
-        name: admin
-        passwor d: admin123
+    user:
+      name: admin
+      password: admin123
+
   datasource:
     url: jdbc:postgresql://ep-withered-king-aa21vv8q-pooler.westus3.azure.neon.tech:5432/neondb?user=neondb_owner&password=npg_0gnbkuv5IWlH&sslmode=require
     username: neondb_owner
@@ -14,3 +15,8 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: "+7xPjMy3ShEYQClRLDpvwcy6GjDADONvh10c4iMxFrU="
+  expiration: 3600000  # 1 hora en milisegundos
+  issuer: miapp

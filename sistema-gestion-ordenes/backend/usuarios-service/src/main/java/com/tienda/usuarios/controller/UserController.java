@@ -3,13 +3,14 @@ package com.tienda.usuarios.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity; 
-import org.springframework.web.bind.annotation.*; 
+import org.springframework.web.bind.annotation.*;
 
+import com.tienda.usuarios.dto.UserResponseDTO;
 import com.tienda.usuarios.model.User;
 import com.tienda.usuarios.service.UserService;
 
 @RestController 
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UserController {
      private final UserService userService;
 
@@ -21,6 +22,12 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         User newUser = userService.registerUser(user);
         return ResponseEntity.ok(newUser);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        UserResponseDTO user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("/ping")
