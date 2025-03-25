@@ -49,8 +49,8 @@ jobs:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
           mkdir -p ~/.kube
-          echo "$KUBECONFIG" > ~/.kube/config
-          kubectl get nodes  # Prueba la conexión
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
+          kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
