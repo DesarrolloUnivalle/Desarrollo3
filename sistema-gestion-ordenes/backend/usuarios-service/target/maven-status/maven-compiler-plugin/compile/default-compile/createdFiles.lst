@@ -1,11 +1,18 @@
 com\tienda\usuarios\dto\UserRequestDTO.class
+<<<<<<< HEAD
 com\tienda\usuarios\security\JwtAuthFilter.class
 com\tienda\usuarios\controller\AuthController.class
+=======
+com\tienda\usuarios\repository\UserRepository.class
+com\tienda\usuarios\TiendaUsuariosApplication.class
+com\tienda\usuarios\repository\RoleRepository.class
+>>>>>>> 69f51eec509d70ac978f44ed516f3304d2730625
 com\tienda\usuarios\controller\UserController.class
 com\tienda\usuarios\controller\HomeController.class
 com\tienda\usuarios\config\SecurityConfig.class
 com\tienda\usuarios\dto\UserResponseDTO.class
 com\tienda\usuarios\model\Role.class
+<<<<<<< HEAD
 com\tienda\usuarios\dto\AuthResponseDTO.class
 com\tienda\usuarios\security\JwtUtil.class
 com\tienda\usuarios\service\UserDetailsServiceImpl.class
@@ -16,4 +23,7 @@ com\tienda\usuarios\TiendaUsuariosApplication.class
 com\tienda\usuarios\repository\RoleRepository.class
 com\tienda\usuarios\dto\AuthRequestDTO.class
 com\tienda\usuarios\service\AuthService.class
+=======
+com\tienda\usuarios\service\UserService.class
+>>>>>>> 69f51eec509d70ac978f44ed516f3304d2730625
 com\tienda\usuarios\model\User.class
