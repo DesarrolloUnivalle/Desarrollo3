@@ -1,0 +1,86 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #222;
+    font-family: Arial, sans-serif;
+}
+
+.register-container {
+    display: flex;
+    width: 650px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.register-section {
+    width: 50%;
+    padding: 20px;
+    text-align: left;
+}
+
+.register-section h2 {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 50px;
+    font-style: poppins;
+}
+
+.register-section input {
+    width: 85%;
+    align-items: left;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.continue, .google {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.continue {
+    background: #18262F;
+    color: white;
+}
+
+.google {
+    background: white;
+    border: 1px solid #ccc;
+}
+
+.login-link {
+    margin-top: 25px;
+}
+
+.login-link a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.logo-section {
+    width: 50%;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-section img {
+    width: 100%;
+    align-items: center;
+}
