@@ -50,7 +50,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login", "/auth/register", "/","/ping").permitAll() // Permitir acceso sin token a login y registro
-                .requestMatchers("/usuarios/").authenticated() // Protege los endpoints de usuarios
+                .requestMatchers("/usuarios/**").authenticated()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     
