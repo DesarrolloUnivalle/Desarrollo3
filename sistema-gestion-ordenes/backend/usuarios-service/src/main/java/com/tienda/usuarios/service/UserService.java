@@ -60,10 +60,16 @@ public class UserService {
         if (usuarioExistente.isPresent()) {
             throw new IllegalArgumentException("El correo ya está registrado");
         }
-    
+        System.out.println("🔍 Buscando rol en la BD con nombre: [" + request.getRol().getNombre() + "]");
+        List<Role> roles = roleRepository.findAll();
+        System.out.println("🔍 Roles en la base de datos: " + roles);
+        
         // Buscar el rol en la base de datos
         Role role = roleRepository.findByNombre(request.getRol().getNombre())
                 .orElseThrow(() -> new IllegalArgumentException("🚨 El rol no existe en la base de datos: " + request.getRol().getNombre()));
+
+        
+        System.out.println("✅ Resultado de la búsqueda: " + role);
     
         // Crear usuario
         User user = new User();
