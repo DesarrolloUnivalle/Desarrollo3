@@ -49,8 +49,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())  // Desactiva CSRF
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register", "/","/ping").permitAll() // Permitir acceso sin token a login y registro
-                .requestMatchers("/usuarios/**").authenticated()
+                .requestMatchers("/auth/login", "/auth/register").permitAll() // Permitir acceso sin token a login y registro
+                .requestMatchers("/usuarios/**").authenticated() // Restringir acceso a /usuarios/**
+                .anyRequest().permitAll() // Permite TODAS las demás rutas que no están mencionadas arriba
+                
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     
