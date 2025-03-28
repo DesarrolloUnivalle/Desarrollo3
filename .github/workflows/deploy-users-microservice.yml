@@ -49,9 +49,11 @@ jobs:
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
-          kubectl get nodes
+            mkdir -p ~/.kube
+            echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
+            chmod 600 ~/.kube/config
+            kubectl config use-context gke_helpful-spider-445913-v9_us-central1-a_mi-cluster-gke2
+            kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
