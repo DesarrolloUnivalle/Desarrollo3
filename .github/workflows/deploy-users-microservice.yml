@@ -46,14 +46,14 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Configure Kubernetes
-        env:
-          KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
         run: |
-            mkdir ${HOME}/.kube
-            echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
-            cat ${HOME}/.kube/config
-            kubectl config use-context gke_helpful-spider-445913-v9_us-central1-a_mi-cluster-gke2
-            kubectl get nodes
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ~/.kube/config  # Decodifica y guarda
+          chmod 600 ~/.kube/config  # Asegura permisos correctos
+          # Instala el plugin de autenticación (necesario para GKE)
+          gcloud components install gke-gcloud-auth-plugin -q
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+          kubectl get nodes
 
       - name: Deploy to Kubernetes
         run: |
