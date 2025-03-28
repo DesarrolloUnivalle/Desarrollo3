@@ -48,10 +48,10 @@ jobs:
       - name: Configure Kubernetes
         run: |
           mkdir -p ~/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ~/.kube/config  # Decodifica y guarda
-          chmod 600 ~/.kube/config  # Asegura permisos correctos
-          # Instala el plugin de autenticación (necesario para GKE)
-          gcloud components install gke-gcloud-auth-plugin -q
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ~/.kube/config
+          chmod 600 ~/.kube/config
+          sudo apt-get update -y
+          sudo apt-get install -y google-cloud-cli-gke-gcloud-auth-plugin
           export USE_GKE_GCLOUD_AUTH_PLUGIN=True
           kubectl get nodes
 
