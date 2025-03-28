@@ -47,11 +47,11 @@ jobs:
 
       - name: Configure Kubernetes
         env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+          KUBECONFIG: ${{ secrets.KUBE_CONFIG }}
         run: |
-            mkdir -p ~/.kube
-            echo "${{ secrets.KUBECONFIG }}" | base64 --decode > ~/.kube/config
-            chmod 600 ~/.kube/config
+            mkdir ${HOME}/.kube
+            echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > ${HOME}/.kube/config
+            cat ${HOME}/.kube/config
             kubectl config use-context gke_helpful-spider-445913-v9_us-central1-a_mi-cluster-gke2
             kubectl get nodes
 
