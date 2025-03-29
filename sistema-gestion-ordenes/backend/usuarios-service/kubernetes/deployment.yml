@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: usuarios-service
-          image: $DOCKER_USERNAME/usuarios-service:latest
+          image: juanma200372/usuarios-service:latest
           ports:
             - containerPort: 8080
           livenessProbe:

@@ -67,8 +67,6 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-            sed -i "s|\$DOCKER_USERNAME|${DOCKER_USERNAME}|g" sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
-            cat sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml | grep "image:"
-            kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
-            kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/service.yml
-            kubectl get pods -w
+          sed -i "s|\$DOCKER_USERNAME|${DOCKER_USERNAME}|g" sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
+          kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/deployment.yml
+          kubectl apply -f sistema-gestion-ordenes/backend/usuarios-service/kubernetes/service.yml
