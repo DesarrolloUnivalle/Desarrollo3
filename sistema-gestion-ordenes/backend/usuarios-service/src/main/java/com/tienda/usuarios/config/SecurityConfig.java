@@ -1,6 +1,5 @@
 package com.tienda.usuarios.config;
 
-import com.tienda.usuarios.security.AuthFilter;
 import com.tienda.usuarios.security.JwtAuthFilter;
 import com.tienda.usuarios.security.JwtUtil;
 
@@ -25,8 +24,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
@@ -39,25 +38,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthFilter jwtAuthenticationFilter() {
-        return new AuthFilter(jwtUtil, userDetailsService);
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())  // Desactiva CSRF
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register").permitAll() // Permitir acceso sin token a login y registro
-                .requestMatchers("/usuarios/**").authenticated() // Restringir acceso a /usuarios/**
-                .anyRequest().permitAll() // Permite TODAS las demás rutas que no están mencionadas arriba
-                
+                .requestMatchers("/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/usuarios/**").authenticated()
+                .anyRequest().permitAll()
             )
+            .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
     
         return http.build();
     }
+    
     
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -66,8 +61,4 @@ public class SecurityConfig {
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
 }
-    @Bean
-    public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(jwtUtil, userDetailsService);
-    }
 }
