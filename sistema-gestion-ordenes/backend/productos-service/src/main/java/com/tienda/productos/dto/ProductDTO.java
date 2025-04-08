@@ -25,9 +25,6 @@ public class ProductDTO {
     @Min(value = 0, message = "La cantidad en stock no puede ser negativa")
     private Integer stock;
     
-    private Long categoriaId;
-
-    @NotNull(message = "La categoría es obligatoria")
-    private CategoryDTO categoria;
-    
+    @NotNull(message = "El ID de la categoría es obligatorio")
+    private Long categoriaId;   
 }
