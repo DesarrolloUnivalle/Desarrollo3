@@ -5,6 +5,9 @@ import com.tienda.productos.model.Product;
 
 public interface ProductService {
     Product createProduct(ProductDTO productDTO);
+    Product updateProduct(Long id, ProductDTO productDTO);
+    void deleteProduct(Long id);
         
+    
     
 }

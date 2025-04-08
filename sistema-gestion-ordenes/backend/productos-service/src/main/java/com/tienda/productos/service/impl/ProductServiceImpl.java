@@ -9,6 +9,7 @@ import com.tienda.productos.service.ProductService;
 
 import jakarta.transaction.Transactional;
 
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -40,4 +41,32 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.save(product);
     }
+    
+    @Override
+    public Product updateProduct(Long id, ProductDTO productDTO) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        product.setNombre(productDTO.getNombre());
+        product.setDescripcion(productDTO.getDescripcion());
+        product.setPrecio(productDTO.getPrecio());
+        product.setStock(productDTO.getStock());
+
+        // Buscar y actualizar la categoría si viene una nueva
+        if (productDTO.getCategoriaId() != null) {
+            Categoria category = categoryRepository.findById(productDTO.getCategoriaId())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+            product.setCategoria(category);
+        }
+
+        return productRepository.save(product);
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        if (!productRepository.existsById(id)) {
+            throw new RuntimeException("Producto no encontrado");
+        }
+        productRepository.deleteById(id);
+    }   
 }
