@@ -24,17 +24,17 @@ public class AuthService {
 
     public AuthResponseDTO autenticarUsuario(AuthRequestDTO request) {
         // Verificar si el usuario existe
-        User usuario = userRepository.findByEmail(request.getEmail())
+        User usuario = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // Verificar la contraseña
-        if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
+        if (!passwordEncoder.matches(request.password(), usuario.getPassword())) {
             throw new RuntimeException("Contraseña incorrecta");
         }
 
         // Crear el token JWT
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 
         String username = ((UserDetails) authentication.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(username);
