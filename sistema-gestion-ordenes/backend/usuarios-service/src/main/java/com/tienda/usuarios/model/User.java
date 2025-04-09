@@ -26,5 +26,5 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "rol_id", nullable = false)
-    private Role rol;  // Aquí ahora usamos un objeto Role
+    private Role rol;
 }

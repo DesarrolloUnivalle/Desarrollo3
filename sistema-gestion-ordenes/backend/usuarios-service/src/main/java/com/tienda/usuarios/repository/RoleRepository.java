@@ -14,6 +14,6 @@ public interface RoleRepository extends JpaRepository<Role, Integer> {
     @Query("SELECT r FROM Role r WHERE LOWER(TRIM(r.nombre)) = LOWER(TRIM(:nombre))")
     Optional<Role> findByNombre(@Param("nombre") String nombre);
 
-    @Query("SELECT r FROM Role r")  // 🔥 Asegurar que siempre devuelva datos
+    @Query("SELECT r FROM Role r")
     List<Role> findAllRoles();
 }

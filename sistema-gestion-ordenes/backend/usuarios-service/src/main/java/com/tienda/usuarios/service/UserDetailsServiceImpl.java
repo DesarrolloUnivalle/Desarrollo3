@@ -5,6 +5,7 @@ import com.tienda.usuarios.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,8 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + email));
     
-        System.out.println("🔎 Cargando usuario: " + email);
-        System.out.println("🔹 Rol del usuario: " + user.getRol().getNombre());
+        System.out.println("Cargando usuario: " + email);
+        System.out.println("Rol del usuario: " + user.getRol().getNombre());
     
         return org.springframework.security.core.userdetails.User.builder()
             .username(user.getEmail())
