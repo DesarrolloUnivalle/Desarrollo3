@@ -23,7 +23,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
-    private final UserService userService; // ✅ Agregar UserService para registrar usuarios
+    private final UserService userService;
 
     public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil, UserService userService) {
         this.authenticationManager = authenticationManager;
@@ -51,7 +51,6 @@ public class AuthController {
         }
     }
 
-    // ✅ Nuevo endpoint para registrar usuarios
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(@RequestBody UserRequestDTO request) {
         UserResponseDTO user = userService.registrarUsuario(request);

@@ -10,7 +10,7 @@ public class HomeController {
     public String home() {
         return "Bienvenido al servicio de gestión de usuarios 🚀";
     }
-    @GetMapping("/Inicio")
+    @GetMapping("/inicio")
     public String Inicio() {
         return "¡El servicio de usuarios está funcionando! 🚀";
     }
