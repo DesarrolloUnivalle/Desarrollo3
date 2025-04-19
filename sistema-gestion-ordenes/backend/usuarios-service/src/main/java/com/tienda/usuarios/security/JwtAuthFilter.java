@@ -16,15 +16,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
-    
-    public JwtAuthFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
-        this.userDetailsService = userDetailsService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -35,13 +31,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String token;
         final String username;
     
-
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
     
+        // Extraer token del encabezado
         token = authHeader.substring(7);
+    
         try {
             username = jwtUtil.extractUsername(token);
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -57,6 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido o expirado");
             return;
         }
+    
         filterChain.doFilter(request, response);
     }
 }
