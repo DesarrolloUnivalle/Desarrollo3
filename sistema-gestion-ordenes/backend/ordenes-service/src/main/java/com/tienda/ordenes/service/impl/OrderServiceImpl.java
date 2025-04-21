@@ -1,6 +1,5 @@
 package com.tienda.ordenes.service.impl;
 
-import com.tienda.ordenes.client.ProductoClient;
 import com.tienda.ordenes.dto.OrderRequest;
 import com.tienda.ordenes.dto.OrderResponse;
 import com.tienda.ordenes.model.Order;
@@ -8,85 +7,77 @@ import com.tienda.ordenes.model.OrderItem;
 import com.tienda.ordenes.model.OrderStatus;
 import com.tienda.ordenes.repository.OrderRepository;
 import com.tienda.ordenes.service.OrderService;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
-    private final ProductoClient productoClient;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
-
-    public OrderServiceImpl(OrderRepository orderRepository, 
-                          ProductoClient productoClient,
-                          KafkaTemplate<String, Object> kafkaTemplate) {
-        this.orderRepository = orderRepository;
-        this.productoClient = productoClient;
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Override
     @Transactional
-    public OrderResponse crearOrden(String usuarioId, OrderRequest request) {
-        // Validar stock
-        productoClient.validarStock(request.getItems());
-
-        // Crear orden
+    public OrderResponse crearOrden(String userEmail, OrderRequest request) {
         Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
-        order.setUsuarioId(usuarioId);
-        order.setDetalles(request.getItems());
-        order.setEstado(OrderStatus.CREADA);
+        order.setUsuarioId(13L); // TODO: Obtener el ID del usuario desde el email
         order.setFechaCreacion(LocalDateTime.now());
-        order.setTotal(calcularTotal(request.getItems()));
-
-        // Guardar orden
-        order = orderRepository.save(order);
-
-        // Publicar evento
-        kafkaTemplate.send("ordenes", Map.of(
-            "orderId", order.getId(),
-            "status", order.getEstado().name()
-        ));
-
-        // Construir respuesta
+        order.setEstado(OrderStatus.PENDIENTE);
+        
+        List<OrderItem> items = request.getItems().stream()
+            .map(itemRequest -> {
+                OrderItem item = new OrderItem();
+                item.setProductoId(itemRequest.getProductoId());
+                item.setCantidad(itemRequest.getCantidad());
+                item.setPrecio(itemRequest.getPrecio());
+                item.setOrden(order);
+                return item;
+            })
+            .collect(Collectors.toList());
+            
+        order.setDetalles(items);
+        
+        // Calcular el total antes de guardar
+        Double total = calcularTotal(items);
+        order.setTotal(total);
+        
+        Order savedOrder = orderRepository.save(order);
+        
         return OrderResponse.builder()
-            .id(order.getId())
-            .status(order.getEstado())
-            .fechaCreacion(order.getFechaCreacion())
-            .total(order.getTotal())
+            .id(savedOrder.getId())
+            .status(savedOrder.getEstado())
+            .fechaCreacion(savedOrder.getFechaCreacion())
+            .total(savedOrder.getTotal())
+            .items(savedOrder.getDetalles())
             .build();
     }
 
     @Override
-    public List<OrderResponse> listarOrdenesPorUsuario(String usuarioId) {
-        return orderRepository.findByUsuarioId(usuarioId).stream()
+    public List<OrderResponse> listarOrdenesPorUsuario(String userEmail) {
+        return orderRepository.findByUsuarioId(13L).stream()
             .map(order -> OrderResponse.builder()
                 .id(order.getId())
                 .status(order.getEstado())
                 .fechaCreacion(order.getFechaCreacion())
                 .total(order.getTotal())
+                .items(order.getDetalles())
                 .build())
             .collect(Collectors.toList());
     }
 
     private Double calcularTotal(List<OrderItem> items) {
-        // TODO: Implementar cálculo del total basado en los precios de los productos
         return items.stream()
-            .mapToDouble(item -> item.getCantidad() * obtenerPrecioProducto(item.getProductoId()))
+            .mapToDouble(item -> item.getPrecio() * item.getCantidad())
             .sum();
     }
 
-    private Double obtenerPrecioProducto(String productoId) {
+    private Double obtenerPrecioProducto(Long productoId) {
         // TODO: Implementar obtención del precio del producto
-        return 0.0;
+        return 0.0; // Placeholder
     }
 }

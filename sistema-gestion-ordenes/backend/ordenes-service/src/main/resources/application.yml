@@ -31,8 +31,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/auth/realms/tienda
-          jwk-set-uri: http://localhost:8081/auth/realms/tienda/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8081/realms/tienda
+          jwk-set-uri: http://localhost:8081/realms/tienda/protocol/openid-connect/certs
 
 # Configuración JWT (debe coincidir con usuarios-service)
 jwt:
