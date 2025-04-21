@@ -10,6 +10,7 @@ import com.tienda.productos.service.ProductService;
 import jakarta.transaction.Transactional;
 
 import java.util.NoSuchElementException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -69,4 +70,19 @@ public class ProductServiceImpl implements ProductService {
         }
         productRepository.deleteById(id);
     }   
+
+    @Override
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+}
+
+@Override
+    public List<Product> searchProducts(String keyword) {
+        List<Product> products = productRepository.findByNombreContainingIgnoreCase(keyword)
+                .orElseThrow(() -> new NoSuchElementException("No se encontraron productos con la palabra clave: " + keyword));
+        return products;
+    }
+
+    
 }
