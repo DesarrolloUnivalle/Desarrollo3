@@ -8,22 +8,39 @@
 <body>
     <div class="login-container">
         <div class="logo-section">
-            <img src="http://imgfz.com/i/v1MdXnP.png" alt="LEGO Logo">
+        <img src="http://imgfz.com/i/v1MdXnP.png" alt="LEGO Logo">
         </div>
         <div class="login-section">
-            <h2>Login</h2>
-            <form>
-                <input type="text" placeholder="User" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <div class="links">
-                <a href="#">Forgot Password?</a>
-                <a href="#">Get help signing in</a>
-            </div>
-            <div class="signup">
-                <p>Don’t have an account? <a href="../register/">Sign up.</a></p>
-            </div>
+        <h2>Login</h2>
+    
+        <form (ngSubmit)="login()">
+            <input
+            type="email"
+            name="email"
+            placeholder="User"
+            [(ngModel)]="email"
+            required
+            />
+            <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            [(ngModel)]="password"
+            required
+            />
+            <button type="submit">Login</button>
+        </form>
+    
+        <p *ngIf="errorMessage" style="color: red">{{ errorMessage }}</p>
+    
+        <div class="links">
+            <a href="#">Forgot Password?</a>
+            <a href="#">Get help signing in</a>
+        </div>
+        <div class="signup">
+            <p>Don’t have an account? <a href="../register/">Sign up.</a></p>
+        </div>
         </div>
     </div>
+  
 </body>
