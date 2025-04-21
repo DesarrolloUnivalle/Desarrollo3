@@ -1,26 +1,30 @@
 package com.tienda.ordenes.dto;
 
 import com.tienda.ordenes.model.OrderStatus;
+import com.tienda.ordenes.model.OrderItem;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class OrderResponse {
-    private String id;
+    private Long id;
     private OrderStatus status;
     private LocalDateTime fechaCreacion;
     private Double total;
+    private List<OrderItem> items;
 
     private OrderResponse(Builder builder) {
         this.id = builder.id;
         this.status = builder.status;
         this.fechaCreacion = builder.fechaCreacion;
         this.total = builder.total;
+        this.items = builder.items;
     }
 
     public static Builder builder() {
         return new Builder();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
@@ -36,13 +40,18 @@ public class OrderResponse {
         return total;
     }
 
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
     public static class Builder {
-        private String id;
+        private Long id;
         private OrderStatus status;
         private LocalDateTime fechaCreacion;
         private Double total;
+        private List<OrderItem> items;
 
-        public Builder id(String id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
@@ -59,6 +68,11 @@ public class OrderResponse {
 
         public Builder total(Double total) {
             this.total = total;
+            return this;
+        }
+
+        public Builder items(List<OrderItem> items) {
+            this.items = items;
             return this;
         }
 

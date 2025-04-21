@@ -1,0 +1,16 @@
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\controller\OrderController.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\exception\StockInsuficienteException.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\config\SecurityConfig.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\dto\OrderItemDTO.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\exception\GlobalExceptionHandler.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\model\OrderItem.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\OrdenesApplication.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\repository\OrderRepository.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\model\Order.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\model\OrderStatusConverter.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\client\ProductoClient.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\service\impl\OrderServiceImpl.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\service\OrderService.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\dto\OrderResponse.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\model\OrderStatus.java
+C:\Users\juanm\desarrollo3Organizacion\Desarrollo3\sistema-gestion-ordenes\backend\ordenes-service\src\main\java\com\tienda\ordenes\dto\OrderRequest.java

@@ -5,6 +5,8 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -13,43 +15,53 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Convert;
 
 @Entity
 @Table(name = "ordenes")
 public class Order {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "usuario_id")
-    private String usuarioId;
+    @NotNull
+    private Long usuarioId;
 
     @Column(name = "fecha_creacion")
+    @NotNull
     private LocalDateTime fechaCreacion;
 
     @Column(name = "estado")
-    @Enumerated(EnumType.ORDINAL)
     @NotNull
+    @Convert(converter = OrderStatusConverter.class)
     private OrderStatus estado;
 
     @Column(name = "total")
+    @NotNull
     private Double total;
 
-    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> detalles;
 
-    public String getId() {
+    // Constructor vacío
+    public Order() {
+    }
+
+    // Getters y Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUsuarioId() {
+    public Long getUsuarioId() {
         return usuarioId;
     }
 
-    public void setUsuarioId(String usuarioId) {
+    public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
     }
 

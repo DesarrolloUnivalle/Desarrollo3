@@ -1,6 +1,8 @@
 package com.tienda.ordenes.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
@@ -12,27 +14,29 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "detalle_orden")
 public class OrderItem {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "orden_id")
     private Order orden;
 
     @Column(name = "producto_id")
-    private String productoId;
+    private Long productoId;
 
     @Column(name = "cantidad")
     @NotNull
     private Integer cantidad;
 
-    @Column(name = "precio_id")
-    private String precioId;
+    @Column(name = "precio")
+    @NotNull
+    private Double precio;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,11 +48,11 @@ public class OrderItem {
         this.orden = orden;
     }
 
-    public String getProductoId() {
+    public Long getProductoId() {
         return productoId;
     }
 
-    public void setProductoId(String productoId) {
+    public void setProductoId(Long productoId) {
         this.productoId = productoId;
     }
 
@@ -60,11 +64,11 @@ public class OrderItem {
         this.cantidad = cantidad;
     }
 
-    public String getPrecioId() {
-        return precioId;
+    public Double getPrecio() {
+        return precio;
     }
 
-    public void setPrecioId(String precioId) {
-        this.precioId = precioId;
+    public void setPrecio(Double precio) {
+        this.precio = precio;
     }
 }

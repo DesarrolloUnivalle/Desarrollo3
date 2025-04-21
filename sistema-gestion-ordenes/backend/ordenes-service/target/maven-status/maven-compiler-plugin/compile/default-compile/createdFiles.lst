@@ -1,0 +1,16 @@
+com\tienda\ordenes\dto\OrderResponse$Builder.class
+com\tienda\ordenes\exception\StockInsuficienteException.class
+com\tienda\ordenes\model\Order.class
+com\tienda\ordenes\config\SecurityConfig.class
+com\tienda\ordenes\repository\OrderRepository.class
+com\tienda\ordenes\service\OrderService.class
+com\tienda\ordenes\client\ProductoClient.class
+com\tienda\ordenes\exception\GlobalExceptionHandler.class
+com\tienda\ordenes\OrdenesApplication.class
+com\tienda\ordenes\controller\OrderController.class
+com\tienda\ordenes\model\OrderItem.class
+com\tienda\ordenes\service\impl\OrderServiceImpl.class
+com\tienda\ordenes\dto\OrderRequest.class
+com\tienda\ordenes\model\OrderStatus.class
+com\tienda\ordenes\dto\OrderItemDTO.class
+com\tienda\ordenes\dto\OrderResponse.class
