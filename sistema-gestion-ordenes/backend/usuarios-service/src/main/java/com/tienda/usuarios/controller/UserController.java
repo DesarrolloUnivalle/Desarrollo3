@@ -32,5 +32,14 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
+
+    
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@PathVariable("email") String email) {
+        UserResponseDTO user = userService.getUserByEmail(email);  // Ahora que existe el método en el servicio
+        return ResponseEntity.ok(user);
+    }
+
+
     
 }

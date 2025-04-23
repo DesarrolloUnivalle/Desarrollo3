@@ -1,5 +1,6 @@
 package com.tienda.ordenes.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "orden_id")
+    @JsonBackReference // Evita la serialización de la referencia de vuelta a "Order"
     private Order orden;
 
     @Column(name = "producto_id")

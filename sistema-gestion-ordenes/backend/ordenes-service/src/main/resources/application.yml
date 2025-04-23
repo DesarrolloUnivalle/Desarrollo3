@@ -1,5 +1,5 @@
 server:
-  port: 8080  # Puerto del microservicio
+  port: 8080
 
 spring:
   application:
@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   kafka:
-    bootstrap-servers: localhost:9092  # Broker de Kafka
+    bootstrap-servers: localhost:9092
     consumer:
       group-id: ordenes-group
       auto-offset-reset: earliest
@@ -27,24 +27,15 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8081/realms/tienda
-          jwk-set-uri: http://localhost:8081/realms/tienda/protocol/openid-connect/certs
-
-# Configuración JWT (debe coincidir con usuarios-service)
 jwt:
-  secret: "+7xPjMy3ShEYQClRLDpvwcy6GjDADONvh10c4iMxFrU="  # Mismo secret que usuarios-service
-  expiration: 3600000  # 1 hora en ms
-
-# URLs de otros microservicios
+  secret: "+7xPjMy3ShEYQClRLDpvwcy6GjDADONvh10c4iMxFrU="
+  expiration: 3600000
+  issuer: miapp 
 productos-service:
-  url: http://localhost:8081  # URL de productos-service
+  url: http://localhost:8081
 
 usuarios-service:
-  url: http://localhost:8082  # URL de usuarios-service (para futuras integraciones)
+  url: http://localhost:8082
 
 feign:
   client:
