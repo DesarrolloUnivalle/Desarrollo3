@@ -14,6 +14,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "usuario_id", nullable = false)
+    private Long usuarioId; // Agregar este campo para mapear "usuario_id" en la base de datos
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 

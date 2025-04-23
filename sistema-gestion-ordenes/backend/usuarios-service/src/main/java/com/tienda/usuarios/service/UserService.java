@@ -33,14 +33,29 @@ public class UserService {
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
+
         return new UserResponseDTO(
-            user.getId(),
+            user.getUsuarioId(), // Cambiar para devolver "usuarioId"
             user.getNombre(),
             user.getEmail(),
             user.getRol().getNombre()
-            );
+        );
     }
+
+    // Metodo para obtener el usuario por el email
+    public UserResponseDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return new UserResponseDTO(
+            user.getUsuarioId(), // Cambiar para devolver "usuarioId"
+            user.getNombre(),
+            user.getEmail(),
+            user.getRol().getNombre()
+        );
+    }
+
+
     
     public UserResponseDTO registrarUsuario(UserRequestDTO request) {
         Optional<User> usuarioExistente = userRepository.findByEmail(request.email());
