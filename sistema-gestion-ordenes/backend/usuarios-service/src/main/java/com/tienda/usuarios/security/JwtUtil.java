@@ -37,8 +37,20 @@ public class JwtUtil {
                 .compact();
     }
     public String generateToken(UserDetails userDetails) {
-        return generateToken(userDetails.getUsername());
+        String role = userDetails.getAuthorities().stream()
+            .findFirst()
+            .map(grantedAuthority -> grantedAuthority.getAuthority()) // Ej. "ROLE_ADMIN"
+            .orElse("ROLE_USER");
+    
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .claim("role", role)
+                .setIssuer(issuer)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
+    
     
     // Método para validar el token
 
@@ -66,7 +78,7 @@ public class JwtUtil {
                 .getBody();
     }
 
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getClaims(token);
         return claimsResolver.apply(claims);
     }
