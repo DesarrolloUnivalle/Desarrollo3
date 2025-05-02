@@ -27,8 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
         return org.springframework.security.core.userdetails.User.builder()
             .username(user.getEmail())
-            .password(user.getPassword()) // Asegúrate de que la contraseña está cifrada
-            .roles(user.getRol().getNombre()) // Spring Security usa roles
+            .password(user.getPassword())
+            .roles(user.getRol().getNombre().toUpperCase())
             .build();
+
     }
 }
