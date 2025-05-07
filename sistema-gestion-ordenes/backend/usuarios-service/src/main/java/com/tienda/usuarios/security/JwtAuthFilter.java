@@ -47,11 +47,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 var authorities = java.util.List.of(new org.springframework.security.core.authority.SimpleGrantedAuthority(role));
             
                 // Crear UserDetails personalizado solo con username y authorities
-                UserDetails userDetails = org.springframework.security.core.userdetails.User
-                    .withUsername(username)
-                    .password("") // No es necesario validar password aquí
-                    .authorities(authorities)
-                    .build();
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+  
             
                 if (jwtUtil.isTokenValid(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
