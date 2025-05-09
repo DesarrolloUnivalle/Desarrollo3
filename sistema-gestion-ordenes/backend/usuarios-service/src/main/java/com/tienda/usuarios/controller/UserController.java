@@ -1,5 +1,6 @@
 package com.tienda.usuarios.controller;
 
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity; 
@@ -8,6 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import com.tienda.usuarios.dto.UserResponseDTO;
 import com.tienda.usuarios.model.User;
 import com.tienda.usuarios.service.UserService;
+
+import com.tienda.usuarios.security.JwtAuthFilter;
+import com.tienda.usuarios.security.JwtUtil;
+
+import org.springframework.security.core.Authentication;
+
+
+import com.tienda.usuarios.security.CustomUserDetails;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController 
 @RequestMapping("/usuarios")
@@ -41,5 +53,20 @@ public class UserController {
     }
 
 
+    @DeleteMapping("/{usuario_id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("usuario_id") Long id, Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        
+        if (!isAdmin && !userDetails.getId().equals(id)) {
+            return ResponseEntity.status(403).build(); // Forbidden
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    
     
 }
