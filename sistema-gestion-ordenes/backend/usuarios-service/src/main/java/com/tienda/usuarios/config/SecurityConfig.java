@@ -19,9 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
+
+
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
@@ -44,6 +51,8 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN") 
+                .requestMatchers("/repartidor/**").hasRole("REPARTIDOR")
                 .requestMatchers("/usuarios/**").authenticated()
                 .anyRequest().permitAll()
                 

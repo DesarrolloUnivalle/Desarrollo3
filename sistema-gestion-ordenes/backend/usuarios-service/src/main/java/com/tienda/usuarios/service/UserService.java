@@ -91,5 +91,10 @@ public class UserService {
             user.getRol().getNombre()
         );
     }
-    
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        userRepository.delete(user);
+    }    
 }
