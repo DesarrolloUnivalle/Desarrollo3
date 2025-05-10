@@ -162,6 +162,10 @@
             <artifactId>swagger-annotations</artifactId>
             <version>2.2.15</version> <!-- Use the latest version -->
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -172,6 +176,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
                     <mainClass>com.tienda.ordenes.OrdenesApplication</mainClass>
                     <excludes>
                         <exclude>
