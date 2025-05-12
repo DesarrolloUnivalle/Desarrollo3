@@ -1,6 +1,7 @@
 package com.tienda.ordenes.service.impl;
 
 import com.tienda.ordenes.client.UsuarioClient;
+import com.tienda.ordenes.client.ProductoClient;
 import com.tienda.ordenes.dto.OrderRequest;
 import com.tienda.ordenes.dto.OrderResponse;
 import com.tienda.ordenes.dto.UserResponseDTO;
@@ -8,10 +9,12 @@ import com.tienda.ordenes.model.Order;
 import com.tienda.ordenes.model.OrderItem;
 import com.tienda.ordenes.model.OrderStatus;
 import com.tienda.ordenes.repository.OrderRepository;
+import com.tienda.ordenes.service.EmailService;
 import com.tienda.ordenes.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +26,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
+    @Autowired
+    private EmailService emailService;
     private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     private final OrderRepository orderRepository;
     private final UsuarioClient usuarioClient;
+    private final ProductoClient productoClient;
 
     @Override
     @Transactional
@@ -44,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
         // Crear la orden
         Order order = new Order();
-        order.setUsuarioId(usuario.getUsuarioId()); // Usar el campo "usuarioId"
+        order.setUsuarioId(usuario.getUsuarioId());
         logger.info("Asignando usuarioId a la orden: {}", usuario.getUsuarioId());
 
         order.setFechaCreacion(LocalDateTime.now());
@@ -57,12 +63,20 @@ public class OrderServiceImpl implements OrderService {
                 item.setProductoId(itemRequest.getProductoId());
                 item.setCantidad(itemRequest.getCantidad());
                 item.setPrecio(itemRequest.getPrecio());
-                item.setOrden(order); // Establecer la relación con la orden
+                item.setOrden(order);
                 return item;
             })
             .collect(Collectors.toList());
 
         order.setDetalles(items);
+
+        // Validar el stock antes de procesar la orden
+        productoClient.validarStock(items);
+
+        // Actualizar el stock de cada producto
+        for (OrderItem item : items) {
+            productoClient.actualizarStock(item.getProductoId(), item.getCantidad());
+        }
 
         // Calcular el total antes de guardar
         Double total = calcularTotal(items);
@@ -79,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
                 .status(savedOrder.getEstado())
                 .fechaCreacion(savedOrder.getFechaCreacion())
                 .total(savedOrder.getTotal())
-                .items(savedOrder.getDetalles()) // Incluir los detalles en la respuesta
+                .items(savedOrder.getDetalles())
                 .build();
     }
 
@@ -98,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
                         .status(order.getEstado())
                         .fechaCreacion(order.getFechaCreacion())
                         .total(order.getTotal())
-                        .items(order.getDetalles()) // Incluir los detalles en la respuesta
+                        .items(order.getDetalles())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -107,5 +121,11 @@ public class OrderServiceImpl implements OrderService {
         return items.stream()
                 .mapToDouble(item -> item.getPrecio() * item.getCantidad())
                 .sum();
+    }
+
+    public void procesarPago(Order order, UserResponseDTO usuario) {
+        String emailUsuario = usuario.getCorreo();
+        String nombreUsuario = usuario.getNombre();
+        emailService.enviarConfirmacionPago(emailUsuario, nombreUsuario, order.getId().toString());
     }
 }

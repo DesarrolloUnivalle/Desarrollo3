@@ -1,6 +1,8 @@
 com\tienda\usuarios\dto\UserRequestDTO.class
 com\tienda\usuarios\security\JwtAuthFilter.class
+com\tienda\usuarios\security\CustomUserDetails.class
 com\tienda\usuarios\controller\AuthController.class
+com\tienda\usuarios\controller\RepartidorController.class
 com\tienda\usuarios\controller\UserController.class
 com\tienda\usuarios\controller\HomeController.class
 com\tienda\usuarios\config\SecurityConfig.class
