@@ -12,6 +12,17 @@ public class OrderResponse {
     private Double total;
     private List<OrderItem> items;
 
+    public static OrderResponse fromEntity(com.tienda.ordenes.model.Order order) {
+    return OrderResponse.builder()
+            .id(order.getId())
+            .status(order.getEstado())  // Usamos directamente el enum
+            .fechaCreacion(order.getFechaCreacion())
+            .total(order.getTotal())
+            .items(order.getDetalles()) // Ya es una lista de OrderItem
+            .build();
+    }
+
+
     private OrderResponse(Builder builder) {
         this.id = builder.id;
         this.status = builder.status;

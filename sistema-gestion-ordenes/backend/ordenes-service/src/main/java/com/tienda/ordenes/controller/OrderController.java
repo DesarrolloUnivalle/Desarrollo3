@@ -74,7 +74,10 @@ public class OrderController {
 
         UserResponseDTO usuario = usuarioClient.obtenerUsuarioPorEmail(emailUsuario);
 
+        // 
+
         ((OrderServiceImpl) orderService).procesarPago(order, usuario);
+
 
         return ResponseEntity.ok("Correo de confirmación enviado");
     }   
