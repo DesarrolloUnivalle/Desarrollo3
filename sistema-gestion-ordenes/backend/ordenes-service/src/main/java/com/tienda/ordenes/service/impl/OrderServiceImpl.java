@@ -115,6 +115,10 @@ public class OrderServiceImpl implements OrderService {
     public void procesarPago(Order order, UserResponseDTO usuario) {
         String emailUsuario = usuario.getCorreo();
         String nombreUsuario = usuario.getNombre();
-        emailService.enviarConfirmacionPago(emailUsuario, nombreUsuario, order.getId().toString());
+        
+        OrderResponse respuesta = OrderResponse.fromEntity(order);
+        emailService.enviarConfirmacionPago(emailUsuario, nombreUsuario, order.getId().toString(), respuesta);
+
+
     }
 }
