@@ -5,6 +5,7 @@ import com.tienda.entregas.dto.EntregaRequest;
 import com.tienda.entregas.dto.EntregaResponse;
 import com.tienda.entregas.dto.UserResponseDTO;
 import com.tienda.entregas.exception.EntregaNotFoundException;
+import com.tienda.entregas.exception.RolInvalidoException;
 import com.tienda.entregas.kafka.KafkaProducer;
 import com.tienda.entregas.model.entity.Entrega;
 import com.tienda.entregas.model.entity.Entrega.EntregaStatus;
@@ -49,22 +50,39 @@ public class EntregaServiceImpl implements EntregaService {
         String token = obtenerToken();
         logger.info("Creando entrega para orden {} con repartidor {}", request.getOrdenId(), request.getRepartidorId());
 
+        UserResponseDTO repartidor = null; // Inicializar con null para evitar error de compilación
+        Long repartidorId;
+        
         try {
-            UserResponseDTO repartidor = usuarioClient.obtenerUsuarioPorId(request.getRepartidorId(), token);
+            repartidor = usuarioClient.obtenerUsuarioPorId(request.getRepartidorId(), token);
             logger.info("Información del repartidor: {}", repartidor);
-            // Temporalmente aceptamos cualquier rol para probar
-            // if (!"REPARTIDOR".equals(repartidor.getRol())) {
-            //    throw new IllegalArgumentException("El usuario no es un repartidor válido.");
-            // }
+            
+            // Validamos que el usuario tenga el rol de REPARTIDOR (insensible a mayúsculas/minúsculas)
+            if (!"REPARTIDOR".equalsIgnoreCase(repartidor.getRol()) && !"Repartidor".equalsIgnoreCase(repartidor.getRol())) {
+                String mensaje = "El usuario con ID " + request.getRepartidorId() + 
+                    " no es un repartidor. Rol actual: " + repartidor.getRol();
+                logger.error(mensaje);
+                throw new RolInvalidoException(mensaje);
+            }
+            
+            // Usar el usuarioId devuelto por el servicio de usuarios
+            repartidorId = repartidor.getUsuarioId();
+            logger.info("Usando el usuarioId {} devuelto por el servicio de usuarios", repartidorId);
+        } catch (feign.FeignException e) {
+            logger.error("Error al comunicarse con el servicio de usuarios: {}", e.getMessage());
+            throw new IllegalArgumentException("No se pudo verificar la información del repartidor. Servicio de usuarios no disponible.");
         } catch (Exception e) {
-            logger.error("Error al obtener información del repartidor: {}", e.getMessage());
-            // Continuamos con la creación de la entrega para probar
+            if (e instanceof RolInvalidoException) {
+                throw e;
+            }
+            logger.error("Error inesperado al obtener información del repartidor: {}", e.getMessage());
+            throw new IllegalArgumentException("Error al verificar la información del repartidor: " + e.getMessage());
         }
 
         Entrega entrega = new Entrega();
         entrega.setOrdenId(request.getOrdenId());
         entrega.setPedidoId(request.getOrdenId());
-        entrega.setRepartidorId(request.getRepartidorId());
+        entrega.setRepartidorId(repartidorId);
         entrega.setEstado(EntregaStatus.Asignado);
         entrega.setFechaAsignacion(LocalDateTime.now());
         entrega.setDireccionEntrega(request.getDireccionEntrega());
@@ -114,15 +132,39 @@ public class EntregaServiceImpl implements EntregaService {
         String token = obtenerToken();
         logger.info("Asignando repartidor automático {} para orden {}", repartidorIdHardcodeado, ordenId);
 
-        UserResponseDTO repartidor = usuarioClient.obtenerUsuarioPorId(repartidorIdHardcodeado, token);
-        if (!"REPARTIDOR".equals(repartidor.getRol())) {
-            throw new IllegalStateException("El repartidor hardcodeado no es válido.");
+        UserResponseDTO repartidor = null; // Inicializar con null para evitar error de compilación
+        Long repartidorId;
+        
+        try {
+            repartidor = usuarioClient.obtenerUsuarioPorId(repartidorIdHardcodeado, token);
+            
+            // Validamos que el usuario tenga el rol de REPARTIDOR (insensible a mayúsculas/minúsculas)
+            if (!"REPARTIDOR".equalsIgnoreCase(repartidor.getRol()) && !"Repartidor".equalsIgnoreCase(repartidor.getRol())) {
+                String mensaje = "El usuario con ID " + repartidorIdHardcodeado + 
+                    " no es un repartidor. Rol actual: " + repartidor.getRol();
+                logger.error(mensaje);
+                throw new RolInvalidoException(mensaje);
+            }
+            
+            // Usar el usuarioId devuelto por el servicio de usuarios
+            repartidorId = repartidor.getUsuarioId();
+            logger.info("Usando el usuarioId {} devuelto por el servicio de usuarios", repartidorId);
+        } catch (feign.FeignException e) {
+            logger.error("Error al comunicarse con el servicio de usuarios: {}", e.getMessage());
+            logger.warn("Continuando con el ID proporcionado debido a que el servicio de usuarios no está disponible");
+            repartidorId = repartidorIdHardcodeado; // Usamos el ID hardcodeado en caso de error
+        } catch (Exception e) {
+            if (e instanceof RolInvalidoException) {
+                throw e;
+            }
+            logger.error("Error inesperado al obtener información del repartidor: {}", e.getMessage());
+            throw new IllegalArgumentException("Error al verificar la información del repartidor: " + e.getMessage());
         }
 
         Entrega entrega = new Entrega();
         entrega.setOrdenId(ordenId);
         entrega.setPedidoId(ordenId);
-        entrega.setRepartidorId(repartidorIdHardcodeado);
+        entrega.setRepartidorId(repartidorId);
         entrega.setEstado(EntregaStatus.Asignado);
         entrega.setFechaAsignacion(LocalDateTime.now());
         entrega.setDireccionEntrega(direccionEntrega);
