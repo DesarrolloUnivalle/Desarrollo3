@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class EntregaResponse {
     private Long id;
     private Long ordenId;
+    private Long pedidoId;
     private Long repartidorId;
     private String estado;
     private LocalDateTime fechaAsignacion;

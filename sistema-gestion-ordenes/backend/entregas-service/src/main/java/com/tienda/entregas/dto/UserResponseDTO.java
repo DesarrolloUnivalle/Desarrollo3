@@ -1,7 +1,6 @@
 package com.tienda.entregas.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
 
 public class UserResponseDTO {
     @JsonProperty("usuarioId")
@@ -12,7 +11,7 @@ public class UserResponseDTO {
     @JsonProperty("email")
     private String correo;
 
-    private List<String> roles; // Lista de roles (ej: ["REPARTIDOR", "CLIENTE"])
+    private String rol; // Un solo rol en lugar de una lista
 
     // Getters y Setters
     public Long getUsuarioId() {
@@ -39,12 +38,12 @@ public class UserResponseDTO {
         this.correo = correo;
     }
 
-    public List<String> getRoles() {
-        return roles;
+    public String getRol() {
+        return rol;
     }
 
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class UserResponseDTO {
                 "usuarioId=" + usuarioId +
                 ", nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
-                ", roles=" + roles +
+                ", rol='" + rol + '\'' +
                 '}';
     }
 }

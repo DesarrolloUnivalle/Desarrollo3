@@ -1,7 +1,9 @@
 package com.tienda.entregas.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,11 +11,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import javax.crypto.SecretKey;
-import java.util.Base64;
+
+import java.security.Key;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 @Component
 public class JwtUtil {
@@ -26,15 +31,22 @@ public class JwtUtil {
     @Value("${jwt.issuer}")
     private String issuer;
 
+    @Value("${jwt.expiration}")
+    private long expiration;
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
     public boolean validarToken(String token) {
         try {
-            Claims claims = Jwts.parser()
-                .verifyWith(getSecretKey())
+            Jws<Claims> claims = Jwts.parser()
+                .setSigningKey(getSigningKey())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload();
+                .parseClaimsJws(token);
             
-            logger.debug("Token validado. Claims: {}", claims);
+            logger.debug("Token validado. Claims: {}", claims.getBody());
             return true;
         } catch (Exception e) {
             logger.error("Error al validar el token: {}", e.getMessage());
@@ -43,37 +55,46 @@ public class JwtUtil {
     }
 
     public Authentication getAuthentication(String token) {
-        Claims claims = Jwts.parser()
-            .verifyWith(getSecretKey())
-            .build()
-            .parseSignedClaims(token)
-            .getPayload();
-
+        Claims claims = extractAllClaims(token);
         String subject = claims.getSubject();
-        String role = claims.get("role", String.class);
         
-        logger.debug("Procesando token para usuario: {} con rol: {}", subject, role);
+        // Obtener rol desde el claim
+        String rol = claims.get("role", String.class);
+        if (rol == null) {
+            rol = "ROLE_USER"; // Rol predeterminado
+        }
         
         // Asegurarnos de que el rol tenga el prefijo ROLE_
-        if (role != null && !role.startsWith("ROLE_")) {
-            role = "ROLE_" + role;
+        if (!rol.startsWith("ROLE_")) {
+            rol = "ROLE_" + rol;
         }
 
         Collection<? extends GrantedAuthority> authorities = List.of(
-            new SimpleGrantedAuthority(role)
+            new SimpleGrantedAuthority(rol)
         );
 
         logger.debug("Autoridades establecidas: {}", authorities);
         return new JwtAuthenticationToken(subject, authorities);
     }
 
-    private SecretKey getSecretKey() {
-        try {
-            byte[] decodedKey = Base64.getDecoder().decode(secret);
-            return Keys.hmacShaKeyFor(decodedKey);
-        } catch (Exception e) {
-            logger.error("Error al procesar la clave secreta: {}", e.getMessage());
-            throw e;
-        }
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

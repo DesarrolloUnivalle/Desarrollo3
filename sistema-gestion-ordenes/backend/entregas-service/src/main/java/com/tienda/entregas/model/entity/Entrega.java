@@ -9,10 +9,25 @@ import java.time.LocalDateTime;
 public class Entrega {
 
     public enum EntregaStatus {
-        ASIGNADA, 
-        EN_CAMINO, 
-        ENTREGADA, 
-        CANCELADA
+        Asignado("Asignado"), 
+        En_camino("En camino"), 
+        Entregado("Entregado"), 
+        Cancelado("Cancelado");
+        
+        private final String valor;
+        
+        EntregaStatus(String valor) {
+            this.valor = valor;
+        }
+        
+        public String getValor() {
+            return valor;
+        }
+        
+        @Override
+        public String toString() {
+            return valor;
+        }
     }
 
     @Id
@@ -24,12 +39,15 @@ public class Entrega {
     private Long ordenId;  // Referencia al ID de la orden en el servicio de órdenes
 
     @NotNull
+    @Column(name = "pedido_id")
+    private Long pedidoId;  // Campo requerido por la base de datos
+
+    @NotNull
     @Column(name = "repartidor_id")
     private Long repartidorId;  // ID del usuario con rol "Repartidor"
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private EntregaStatus estado;
+    private String estado;
 
     @Column(name = "fecha_entrega")
     private LocalDateTime fechaEntrega;
@@ -69,6 +87,14 @@ public class Entrega {
         this.ordenId = ordenId;
     }
 
+    public Long getPedidoId() {
+        return pedidoId;
+    }
+
+    public void setPedidoId(Long pedidoId) {
+        this.pedidoId = pedidoId;
+    }
+
     public Long getRepartidorId() {
         return repartidorId;
     }
@@ -78,11 +104,16 @@ public class Entrega {
     }
 
     public EntregaStatus getEstado() {
-        return estado;
+        for (EntregaStatus status : EntregaStatus.values()) {
+            if (status.getValor().equals(estado)) {
+                return status;
+            }
+        }
+        return null;
     }
 
     public void setEstado(EntregaStatus estado) {
-        this.estado = estado;
+        this.estado = estado.getValor();
     }
 
     public LocalDateTime getFechaEntrega() {
