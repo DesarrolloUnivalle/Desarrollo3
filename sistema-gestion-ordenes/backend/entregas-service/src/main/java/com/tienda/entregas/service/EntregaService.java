@@ -8,6 +8,7 @@ public interface EntregaService {
     EntregaResponse crearEntrega(EntregaRequest request);
     EntregaResponse actualizarEstadoEntrega(Long entregaId, String nuevoEstado);
     List<EntregaResponse> listarEntregasPorRepartidor(Long repartidorId);
+    List<EntregaResponse> listarEntregasPorRepartidorEmail(String email);
     List<EntregaResponse> listarEntregasPorOrden(Long ordenId);
     void asignarRepartidorAutomatico(Long ordenId, String direccionEntrega);
 }

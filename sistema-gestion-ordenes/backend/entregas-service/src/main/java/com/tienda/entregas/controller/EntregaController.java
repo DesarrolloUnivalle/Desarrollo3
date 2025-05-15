@@ -49,8 +49,11 @@ public class EntregaController {
     @PreAuthorize("hasAnyRole('ADMIN', 'REPARTIDOR')")
     public ResponseEntity<List<EntregaResponse>> listarEntregasPorRepartidor(
             @AuthenticationPrincipal Jwt jwt) {
-        Long repartidorId = Long.parseLong(jwt.getSubject());
-        List<EntregaResponse> response = entregaService.listarEntregasPorRepartidor(repartidorId);
+        String email = jwt.getSubject();
+        if (email == null) {
+            throw new IllegalArgumentException("El token no contiene el email del repartidor");
+        }
+        List<EntregaResponse> response = entregaService.listarEntregasPorRepartidorEmail(email);
         return ResponseEntity.ok(response);
     }
 
