@@ -189,6 +189,16 @@ public class EntregaServiceImpl implements EntregaService {
                 .toList();
     }
 
+    @Override
+    public List<EntregaResponse> listarEntregasPorRepartidorEmail(String email) {
+        String token = obtenerToken();
+        UserResponseDTO usuario = usuarioClient.obtenerUsuarioPorEmail(email, token);
+        if (usuario == null) {
+            throw new IllegalArgumentException("No se encontró el repartidor con email: " + email);
+        }
+        return listarEntregasPorRepartidor(usuario.getUsuarioId());
+    }
+
     private EntregaResponse mapToEntregaResponse(Entrega entrega) {
         return EntregaResponse.builder()
                 .id(entrega.getId())
