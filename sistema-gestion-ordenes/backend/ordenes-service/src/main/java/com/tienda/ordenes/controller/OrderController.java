@@ -26,6 +26,7 @@ import com.tienda.ordenes.service.EmailService;
 import com.tienda.ordenes.service.OrderService;
 import com.tienda.ordenes.service.impl.OrderServiceImpl;
 import com.tienda.ordenes.model.Order;
+import com.tienda.ordenes.model.OrderStatus;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -63,14 +64,21 @@ public class OrderController {
     }
     
     @PostMapping("/pago-exitoso")
-    public ResponseEntity<String> confirmarPago(@RequestBody ConfirmarPagoRequest request) {
+    public ResponseEntity<OrderResponse> confirmarPago(@RequestBody ConfirmarPagoRequest request) {
         Long orderId = request.getOrderId();
         String emailUsuario = request.getEmailUsuario();
 
-        System.out.println("Confirmando pago para la orden ID: " + orderId + " con el email " + emailUsuario);
+        
 
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orden no encontrada"));
+        if (order.getEstado() != OrderStatus.PENDIENTE) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "La orden #" + orderId + " no puede ser procesada porque su estado actual es: " + order.getEstado().getValue()
+            );
+        }
+        System.out.println("Confirmando pago para la orden ID: " + orderId + " con el email " + emailUsuario);    
 
         UserResponseDTO usuario = usuarioClient.obtenerUsuarioPorEmail(emailUsuario);
 
@@ -78,7 +86,8 @@ public class OrderController {
 
         ((OrderServiceImpl) orderService).procesarPago(order, usuario);
 
+        OrderResponse response = OrderResponse.fromEntity(order);
 
-        return ResponseEntity.ok("Correo de confirmación enviado");
+        return ResponseEntity.ok(response);
     }   
 }
