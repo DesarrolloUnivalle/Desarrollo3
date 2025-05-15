@@ -33,14 +33,9 @@ public class EmailServiceImpl implements EmailService {
             helper.setTo(email);
             helper.setSubject("Confirmación de Pago");
 
-            String cuerpo = String.format(
-                "Hola %s,\n\nTu pago para la orden #%s ha sido recibido exitosamente.\n\nResumen de la orden:\n\n%s\n\n¡Gracias por tu compra!",
-                nombre,
-                orderId,
-                generarResumenJson(orden)
-            );
+            String cuerpoHtml = generarResumenHtml(nombre, orden);
 
-            helper.setText(cuerpo, false);
+            helper.setText(cuerpoHtml, true);  
             mailSender.send(mensaje);
             logger.info("Correo enviado exitosamente a {}", email);
 
@@ -48,6 +43,58 @@ public class EmailServiceImpl implements EmailService {
             logger.error("Error al enviar el correo: ", e);
         }
     }
+    private String generarResumenHtml(String nombre, OrderResponse orden) {
+        StringBuilder filas = new StringBuilder();
+        for (var item : orden.getItems()) {
+            filas.append("<tr>")
+                .append("<td>").append("Producto A").append("</td>") // Cambiar si tienes nombre real
+                .append("<td>").append(item.getCantidad()).append("</td>")
+                .append("<td>$").append(String.format("%.2f", item.getPrecio())).append("</td>")
+                .append("</tr>");
+        }
+
+        return """
+            <html>
+            <head>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    h2 { color: #2d7c9e; }
+                    table {
+                        width: 100%%;
+                        border-collapse: collapse;
+                        margin-top: 15px;
+                    }
+                    th, td {
+                        padding: 10px;
+                        border: 1px solid #ccc;
+                    }
+                    th {
+                        background-color: #f2f2f2;
+                        text-align: left;
+                    }
+                </style>
+            </head>
+            <body>
+                <h2>Confirmación de Pago</h2>
+                <p>Hola <strong>%s</strong>,</p>
+                <p>Tu pago para la orden <strong>#%d</strong> ha sido recibido exitosamente.</p>
+                <p><strong>Resumen de la orden:</strong></p>
+                <table>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio unitario</th>
+                    </tr>
+                    %s
+                </table>
+                <p><strong>Total:</strong> $%.2f</p>
+                <p>¡Gracias por tu compra!</p>
+            </body>
+            </html>
+        """.formatted(nombre, orden.getId(), filas.toString(), orden.getTotal());
+
+    }
+
     private String generarResumenJson(OrderResponse orden) {
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
