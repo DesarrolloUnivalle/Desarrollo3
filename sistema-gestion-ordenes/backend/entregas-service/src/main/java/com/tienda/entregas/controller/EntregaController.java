@@ -35,7 +35,7 @@ public class EntregaController {
 
     @Operation(summary = "Actualizar estado de una entrega")
     @PutMapping("/{id}/estado")
-    @PreAuthorize("hasRole('REPARTIDOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'REPARTIDOR')")
     public ResponseEntity<EntregaResponse> actualizarEstadoEntrega(
             @PathVariable Long id,
             @RequestBody String nuevoEstado,
@@ -46,7 +46,7 @@ public class EntregaController {
 
     @Operation(summary = "Listar entregas del repartidor actual")
     @GetMapping("/repartidor")
-    @PreAuthorize("hasRole('REPARTIDOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'REPARTIDOR')")
     public ResponseEntity<List<EntregaResponse>> listarEntregasPorRepartidor(
             @AuthenticationPrincipal Jwt jwt) {
         Long repartidorId = Long.parseLong(jwt.getSubject());
