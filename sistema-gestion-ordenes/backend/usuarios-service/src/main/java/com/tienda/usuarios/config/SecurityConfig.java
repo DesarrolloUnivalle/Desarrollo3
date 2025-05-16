@@ -53,6 +53,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN") 
                 .requestMatchers("/repartidor/**").hasRole("REPARTIDOR")
+                .requestMatchers("/usuarios/*/internal").permitAll()
                 .requestMatchers("/usuarios/**").authenticated()
                 .anyRequest().permitAll()
                 
