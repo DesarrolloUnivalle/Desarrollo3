@@ -36,6 +36,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/{id}/internal")
+    public ResponseEntity<UserResponseDTO> getUserByIdInternal(@PathVariable("id") Long id) {
+        UserResponseDTO user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/ping")
     public String ping() {
         return "¡El servicio de usuarios está funcionando! 🚀";
