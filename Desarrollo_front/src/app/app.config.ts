@@ -13,3 +13,4 @@ export const appConfig: ApplicationConfig = {
     FormsModule // ✅ Correct import
   ]
 };
+

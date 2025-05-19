@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Lista de Productos</h2>
+
+  <ul *ngIf="productos.length > 0; else noData">
+    <li *ngFor="let producto of productos">
+      <a [routerLink]="['/producto', producto.id]">{{ producto.nombre }} - ${{ producto.precio }}</a>
+    </li>
+  </ul>
+
+  <ng-template #noData>
+    <p>No hay productos disponibles.</p>
+  </ng-template>
+</div>

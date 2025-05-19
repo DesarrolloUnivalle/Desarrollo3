@@ -1,0 +1,19 @@
+<div class="container">
+  <h2>Detalle del Producto</h2>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="producto; else noData">
+    <h3>{{ producto.nombre }}</h3>
+    <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+    <p><strong>Stock:</strong> {{ producto.stock }}</p>
+    <p><strong>Categoría ID:</strong> {{ producto.categoriaId }}</p>
+  </div>
+
+  <ng-template #noData>
+    <p>Producto no encontrado.</p>
+  </ng-template>
+</div>
