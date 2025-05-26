@@ -1,0 +1,157 @@
+.detalle-container {
+  display: grid;
+  grid-template-columns: 80px 1fr 1fr 300px;
+  gap: 20px;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background: white;
+}
+
+.galeria {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.miniatura {
+  width: 60px;
+  height: 60px;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.imagen-principal .imagen-simulada {
+  width: 100%;
+  height: 400px;
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.info-producto {
+  grid-column: span 1;
+}
+.estrellas {
+  color: gold;
+  margin-bottom: 10px;
+}
+.precio {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+.precio-anterior {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 10px;
+}
+.precio-actual {
+  font-weight: bold;
+  color: #333;
+}
+.descuento {
+  color: red;
+}
+
+.personalizacion .opciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+.personalizacion .color {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.descripcion ul {
+  padding-left: 20px;
+}
+
+.panel-compra {
+  border: 1px solid #000000;
+  grid-column: 4;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+.panel-compra h2 {
+  color: #333;
+}
+.envio {
+  font-size: 0.9em;
+  margin: 15px 0;
+}
+.envio .verde {
+  color: green;
+}
+.cantidad-control {
+  margin-bottom: 20px;
+  font-size: 0.9em;
+  margin: 15px 0;
+}
+
+.botones-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+.botones-cantidad button {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.botones-cantidad input {
+  width: 50px;
+  text-align: center;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.cantidad button {
+  width: 30px;
+  height: 30px;
+}
+.botones {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.botones button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comprar {
+  background: black;
+  color: white;
+}
+.carrito {
+  background: white;
+  border: 1px solid black;
+}
+.info-extra {
+  font-size: 0.85em;
+  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+}

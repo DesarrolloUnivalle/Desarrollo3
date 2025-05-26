@@ -15,15 +15,15 @@ export interface Producto {
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://localhost:8080/productos/all';
+  private baseUrl = 'http://localhost:8080/productos';
 
   constructor(private http: HttpClient) {}
 
   getProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(this.apiUrl);
+    return this.http.get<Producto[]>(`${this.baseUrl}/all`);
   }
 
   getProductoById(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}/${id}`);
+    return this.http.get<Producto>(`${this.baseUrl}/${id}`);
   }
 }

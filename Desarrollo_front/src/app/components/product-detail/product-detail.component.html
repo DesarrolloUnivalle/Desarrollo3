@@ -1,19 +1,75 @@
-<div class="container">
-  <h2>Detalle del Producto</h2>
-
-  <div *ngIf="error" class="alert alert-danger">
-    {{ error }}
+<div class="detalle-container">
+  <!-- Galería lateral -->
+  <div class="galeria">
+    <div class="miniatura" *ngFor="let _ of [1,2,3,4]"></div>
   </div>
 
-  <div *ngIf="producto; else noData">
-    <h3>{{ producto.nombre }}</h3>
-    <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
-    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
-    <p><strong>Stock:</strong> {{ producto.stock }}</p>
-    <p><strong>Categoría ID:</strong> {{ producto.categoriaId }}</p>
+  <!-- Imagen principal -->
+   <div class="imagen-principal">
+    <div class="imagen-simulada"></div>
   </div>
 
-  <ng-template #noData>
-    <p>Producto no encontrado.</p>
-  </ng-template>
+  <!-- Información del producto -->
+    <div class="info-producto">
+    <h1>{{ producto?.nombre }}</h1>
+    <div class="estrellas">★★★★★ <span>5.0 (8 comentarios)</span></div>
+
+    <div class="precio">
+     
+      <span class="precio-actual">${{ producto?.precio }}</span>
+     
+    </div>
+
+    <div class="personalizacion">
+      <h4>Detalles y personalización</h4>
+      <div class="opciones">
+        <div class="color">Azul</div>
+        <div class="color">Verde</div>
+        <div class="color">Rojo</div>
+        <div class="color">Negro</div>
+      </div>
+
+    </div>
+     <div class="descripcion">
+      <h4>Sobre este producto:</h4>
+      <ul>
+        <li>{{ producto?.descripcion }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Panel de compra -->
+  <div class="panel-compra">
+    <h2>${{ producto?.precio }}</h2>
+
+    <div class="envio">
+      <p><strong>Detalles de envío:</strong></p>
+      <p>Entrega estimada: 10 días <span class="verde">gratis</span></p>
+      <p>Entrega premium: <span class="verde">Entrega rápida</span></p>
+      <p>Enviar a: Colombia - Mi dirección</p>
+    </div>
+
+    
+    <div class="cantidad-control">
+      <p>Stock Disponible: {{ producto?.stock }} <span class="verde"></span></p>
+      <label for="cantidad">Cantidad:</label>
+      <div class="botones-cantidad">
+        <button (click)="restarCantidad()">−</button>
+        <input type="number" id="cantidad" [(ngModel)]="cantidad" min="1" />
+        <button (click)="sumarCantidad()">+</button>
+      </div>
+    </div>
+    
+
+    <!-- Botón Comprar -->
+    <div class="botones">
+      <button class="comprar">Comprar ahora</button>
+      <button class="carrito">Añadir al carrito</button>
+    </div>
+    <ul class="info-extra">
+      <li>✅ Compra protegida y segura.</li>
+      <li>💼 Garantía.</li>
+      <li>↩️ Política de devoluciones.</li>
+    </ul>
+  </div>
 </div>
