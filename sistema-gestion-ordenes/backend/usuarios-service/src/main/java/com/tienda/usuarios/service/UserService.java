@@ -79,11 +79,18 @@ public class UserService {
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password())); // Encriptar contraseña
         user.setRol(role);
+        
+        // Generar un usuario_id único
+        Long maxUsuarioId = userRepository.findAll().stream()
+                .map(User::getUsuarioId)
+                .max(Long::compareTo)
+                .orElse(0L);
+        user.setUsuarioId(maxUsuarioId + 1);
     
         // Guardar en la base de datos
         user = userRepository.save(user);
     
-        // Crear respuesta asegurándonos de que el rol se maneja como String
+        // Crear respuesta
         return new UserResponseDTO(
             user.getId(),
             user.getNombre(),
