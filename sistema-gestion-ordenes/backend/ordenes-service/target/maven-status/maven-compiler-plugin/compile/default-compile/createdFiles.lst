@@ -14,6 +14,7 @@ com\tienda\ordenes\config\SecurityConfig.class
 com\tienda\ordenes\service\OrderService.class
 com\tienda\ordenes\dto\ConfirmarPagoRequest.class
 com\tienda\ordenes\client\ProductoClient.class
+com\tienda\ordenes\config\FeignConfig.class
 com\tienda\ordenes\config\FeignClientInterceptor.class
 com\tienda\ordenes\security\JwtUtil.class
 com\tienda\ordenes\dto\UserResponseDTO.class

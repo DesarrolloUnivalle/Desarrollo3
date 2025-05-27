@@ -1,15 +1,22 @@
 package com.tienda.productos.service;
 
+import com.tienda.productos.dto.ProductDTO;
+import com.tienda.productos.model.OrderItem;
 import java.util.List;
 
-import com.tienda.productos.dto.ProductDTO;
-import com.tienda.productos.model.Product;
-
 public interface ProductService {
-    Product createProduct(ProductDTO productDTO);
-    Product updateProduct(Long id, ProductDTO productDTO);
+    
+    ProductDTO createProduct(ProductDTO productDTO);
+    
+    ProductDTO updateProduct(Long id, ProductDTO productDTO);
+    
     void deleteProduct(Long id);
-    Product getProductById(Long id);
-    List<Product> searchProducts(String keyword);
-    Product actualizarStock(Long id, Integer cantidad);
+    
+    ProductDTO getProductById(Long id);
+    
+    List<ProductDTO> searchProducts(String query);
+    
+    void actualizarStock(Long id, Integer cantidad);
+    
+    void validarStock(List<OrderItem> items);
 }
