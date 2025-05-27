@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/actuator/**").permitAll() // Permitir endpoints de monitoreo
+                .requestMatchers("/actuator/**","/doc/**","/v3/api-docs/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Permitir endpoints de monitoreo
                 .requestMatchers("/api/entregas/**").hasAnyRole("ADMIN", "REPARTIDOR")
                 .anyRequest().authenticated()
             )
