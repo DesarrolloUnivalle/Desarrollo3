@@ -11,6 +11,7 @@ public interface ProductService {
     void deleteProduct(Long id);
     Product getProductById(Long id);
     List<Product> searchProducts(String keyword);
+    List<Product> getAllProducts();
 
         
     

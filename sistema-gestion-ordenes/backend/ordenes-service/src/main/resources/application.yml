@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8085
 
 spring:
   application:
@@ -43,7 +43,7 @@ jwt:
   expiration: 3600000
   issuer: miapp 
 productos-service:
-  url: http://localhost:8081
+  url: http://localhost:8086
 
 usuarios-service:
   url: http://localhost:8082
@@ -63,3 +63,29 @@ management:
   endpoint:
     health:
       show-details: always
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}"
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
+
+logging:
+  level:
+    root: debug
+  pattern:
+    level: "%5p [${spring.application.name}, %X{traceId:-},%X{spanId:-}]"
