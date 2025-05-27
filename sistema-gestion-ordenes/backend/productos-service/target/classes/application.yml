@@ -1,4 +1,8 @@
+server:
+  port: 8086
 spring:
+  application:
+    name: productos-service
   datasource:
     url: jdbc:postgresql://ep-withered-king-aa21vv8q-pooler.westus3.azure.neon.tech:5432/neondb?user=neondb_owner&password=npg_0gnbkuv5IWlH&sslmode=require
     username: neondb_owner
@@ -8,3 +12,32 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}"
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
+
+# Tracing
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+logging:
+  level:
+    root: debug
+  pattern:
+    level: "%5p [${spring.application.name}, %X{traceId:-},%X{spanId:-}]"

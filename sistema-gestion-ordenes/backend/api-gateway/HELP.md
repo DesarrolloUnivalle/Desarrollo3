@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.microservice.gateway.api-gateway' is invalid and this project uses 'com.microservice.gateway.api_gateway' instead.
+* The original package name 'co.edu.univalle.api-gateway' is invalid and this project uses 'co.edu.univalle.api_gateway' instead.
 
 # Getting Started
 
@@ -12,6 +12,8 @@ For further reference, please consider the following sections:
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/3.4.4/maven-plugin)
 * [Create an OCI image](https://docs.spring.io/spring-boot/3.4.4/maven-plugin/build-image.html)
 * [Gateway](https://docs.spring.io/spring-cloud-gateway/reference/spring-cloud-gateway-server-mvc.html)
+* [Spring Boot DevTools](https://docs.spring.io/spring-boot/3.4.4/reference/using/devtools.html)
+* [Spring Configuration Processor](https://docs.spring.io/spring-boot/3.4.4/specification/configuration-metadata/annotation-processor.html)
 
 ### Maven Parent overrides
 
