@@ -126,6 +126,19 @@ public class OrderServiceImpl implements OrderService {
     public void procesarPago(Order order, UserResponseDTO usuario) {
         String emailUsuario = usuario.getCorreo();
         String nombreUsuario = usuario.getNombre();
-        emailService.enviarConfirmacionPago(emailUsuario, nombreUsuario, order.getId().toString());
+
+        if (order.getEstado() == OrderStatus.PAGADA) {
+            logger.info("La orden ya está pagada. No se requiere procesamiento adicional.");
+            return;
+        }
+        order.setEstado(OrderStatus.PAGADA);
+        orderRepository.save(order);
+        logger.info("Orden procesada y marcada como PAGADA.");
+        
+        
+        OrderResponse respuesta = OrderResponse.fromEntity(order);
+        emailService.enviarConfirmacionPago(emailUsuario, nombreUsuario, order.getId().toString(), respuesta);
+
+
     }
 }
