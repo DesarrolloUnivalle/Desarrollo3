@@ -1,0 +1,49 @@
+{
+  "id": "tienda",
+  "realm": "tienda",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "user",
+        "description": "Usuario normal"
+      },
+      {
+        "name": "admin",
+        "description": "Administrador"
+      }
+    ]
+  },
+  "users": [
+    {
+      "username": "test",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "test123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "user"
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "ordenes-service",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "ordenes-service-secret",
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:8080"
+      ],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true
+    }
+  ]
+} 
