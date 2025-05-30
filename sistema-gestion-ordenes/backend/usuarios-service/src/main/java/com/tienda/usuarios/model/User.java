@@ -14,8 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "usuario_id", nullable = false)
-    private Long usuarioId; // Agregar este campo para mapear "usuario_id" en la base de datos
+    @Column(name = "usuario_id")
+    private Long usuarioId;
 
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
@@ -28,6 +28,6 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false)
+    @JoinColumn(name = "rol_id")
     private Role rol;
 }

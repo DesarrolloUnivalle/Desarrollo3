@@ -1,5 +1,5 @@
 server:
-  port: 8086
+  port: 8081
 spring:
   application:
     name: productos-service
@@ -8,36 +8,42 @@ spring:
     username: neondb_owner
     password: npg_0gnbkuv5IWlH
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout: 30000
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}"
-
-springdoc:
-  api-docs:
-    enabled: true
-  swagger-ui:
-    enabled: true
-    path: /doc/swagger-ui.html
-
-# Tracing
-management:
-  zipkin:
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans
-  tracing:
-    sampling:
-      probability: 1.0
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  cloud:
+    discovery:
+      enabled: false
+    loadbalancer:
+      retry:
+        enabled: false
 
 logging:
   level:
-    root: debug
-  pattern:
-    level: "%5p [${spring.application.name}, %X{traceId:-},%X{spanId:-}]"
+    root: INFO
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    com.tienda.productos: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    enabled: false
