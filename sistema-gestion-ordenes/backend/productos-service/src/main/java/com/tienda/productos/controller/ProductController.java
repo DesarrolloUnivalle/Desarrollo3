@@ -49,6 +49,10 @@ public class ProductController {
         List<Product> products = productService.searchProducts(palabra_clave);
         return ResponseEntity.ok(products);
     }
+    @GetMapping("/all")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
 
 
 }
