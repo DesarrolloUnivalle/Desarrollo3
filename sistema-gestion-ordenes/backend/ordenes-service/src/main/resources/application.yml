@@ -46,7 +46,7 @@ jwt:
   expiration: 3600000
   issuer: miapp 
 productos-service:
-  url: http://localhost:8086
+  url: http://localhost:8081
 
 usuarios-service:
   url: http://localhost:8082

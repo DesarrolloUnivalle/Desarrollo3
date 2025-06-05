@@ -16,6 +16,8 @@ public interface ProductService {
     
     List<ProductDTO> searchProducts(String query);
     
+    List<ProductDTO> getAllProducts();
+    
     void actualizarStock(Long id, Integer cantidad);
     
     void validarStock(List<OrderItem> items);
