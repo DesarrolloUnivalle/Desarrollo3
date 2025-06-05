@@ -1,21 +1,10 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="home.component.css">
-</head>
-<body>
-    <div class="home-container">
-        
-        <div class="home-section">
-            <h2>Welcome to the Home Page</h2>
-            <p>This is the main content area.</p>
-            <ul>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-                <li><a href="/profile">Profile</a></li>
-            </ul>
-        </div>
-    </div>
-</body>
+
+
+<div class="productos-container">
+  <div *ngFor="let producto of productos" class="producto-card">
+    <h3>{{ producto.nombre }}</h3>
+    <p>{{ producto.descripcion }}</p>
+    <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+    <a [routerLink]="['/detalle-producto', producto.id]">Ver más</a>
+  </div>
+</div>
