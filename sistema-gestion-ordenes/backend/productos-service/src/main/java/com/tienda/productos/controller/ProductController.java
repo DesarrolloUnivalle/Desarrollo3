@@ -23,32 +23,69 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO) {
-        return ResponseEntity.ok(productService.createProduct(productDTO));
+        try {
+            logger.info("Creando nuevo producto: {}", productDTO);
+            return ResponseEntity.ok(productService.createProduct(productDTO));
+        } catch (Exception e) {
+            logger.error("Error al crear producto: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @Valid @RequestBody ProductDTO productDTO) {
-        return ResponseEntity.ok(productService.updateProduct(id, productDTO));
+        try {
+            logger.info("Actualizando producto con id {}: {}", id, productDTO);
+            return ResponseEntity.ok(productService.updateProduct(id, productDTO));
+        } catch (Exception e) {
+            logger.error("Error al actualizar producto: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
-        return ResponseEntity.noContent().build();
+        try {
+            logger.info("Eliminando producto con id: {}", id);
+            productService.deleteProduct(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            logger.error("Error al eliminar producto: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+        try {
+            logger.info("Obteniendo producto con id: {}", id);
+            return ResponseEntity.ok(productService.getProductById(id));
+        } catch (Exception e) {
+            logger.error("Error al obtener producto: {}", e.getMessage());
+            throw e;
+        }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<ProductDTO>> searchProducts(@RequestParam(required = false) String query) {
-        return ResponseEntity.ok(productService.searchProducts(query));
+    @GetMapping("/buscar/{palabra_clave}")
+    public ResponseEntity<List<ProductDTO>> searchProducts(@PathVariable String palabra_clave) {
+        try {
+            logger.info("Buscando productos con palabra clave: {}", palabra_clave);
+            return ResponseEntity.ok(productService.searchProducts(palabra_clave));
+        } catch (Exception e) {
+            logger.error("Error al buscar productos: {}", e.getMessage());
+            throw e;
+        }
     }
+
     @GetMapping("/all")
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        try {
+            logger.info("Obteniendo todos los productos");
+            return ResponseEntity.ok(productService.getAllProducts());
+        } catch (Exception e) {
+            logger.error("Error al obtener todos los productos: {}", e.getMessage());
+            throw e;
+        }
     }
 
     @PostMapping("/validar-stock")

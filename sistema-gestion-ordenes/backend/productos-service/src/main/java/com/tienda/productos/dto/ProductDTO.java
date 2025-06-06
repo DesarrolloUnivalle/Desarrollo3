@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDTO {
     private Long id;
-    private String name;
-    private String description;
-    private Double price;
+    private String nombre;
+    private String descripcion;
+    private Double precio;
     private Integer stock;
     private Long categoriaId;
-    private String imageUrl;
+    private String imagenUrl;
 }

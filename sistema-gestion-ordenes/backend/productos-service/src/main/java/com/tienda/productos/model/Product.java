@@ -17,9 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String name;
-    private String description;
-    private Double price;
+    private String nombre;
+    private String descripcion;
+    private Double precio;
     private Integer stock;
     
     @ManyToOne
@@ -27,5 +27,5 @@ public class Product {
     @JsonBackReference
     private Categoria categoria;
     
-    private String imageUrl;
+    private String imagenUrl;
 }

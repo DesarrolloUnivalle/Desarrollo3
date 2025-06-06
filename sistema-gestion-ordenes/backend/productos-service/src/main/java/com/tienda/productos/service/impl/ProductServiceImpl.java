@@ -29,11 +29,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(propagation = Propagation.REQUIRED)
     public ProductDTO createProduct(ProductDTO productDTO) {
         Product product = new Product();
-        product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
+        product.setNombre(productDTO.getNombre());
+        product.setDescripcion(productDTO.getDescripcion());
+        product.setPrecio(productDTO.getPrecio());
         product.setStock(productDTO.getStock());
-        product.setImageUrl(productDTO.getImageUrl());
+        product.setImagenUrl(productDTO.getImagenUrl());
         
         if (productDTO.getCategoriaId() != null) {
             Categoria categoria = categoriaRepository.findById(productDTO.getCategoriaId())
@@ -51,11 +51,11 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
         
-        product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setPrice(productDTO.getPrice());
+        product.setNombre(productDTO.getNombre());
+        product.setDescripcion(productDTO.getDescripcion());
+        product.setPrecio(productDTO.getPrecio());
         product.setStock(productDTO.getStock());
-        product.setImageUrl(productDTO.getImageUrl());
+        product.setImagenUrl(productDTO.getImagenUrl());
         
         if (productDTO.getCategoriaId() != null) {
             Categoria categoria = categoriaRepository.findById(productDTO.getCategoriaId())
@@ -86,14 +86,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductDTO> searchProducts(String query) {
-        if (query == null || query.trim().isEmpty()) {
+    public List<ProductDTO> searchProducts(String palabra_clave) {
+        if (palabra_clave == null || palabra_clave.trim().isEmpty()) {
             return productRepository.findAll().stream()
                     .map(this::convertToDTO)
                     .collect(Collectors.toList());
         }
-        
-        return productRepository.findByNameContainingIgnoreCase(query).stream()
+        return productRepository.findByNombreContainingIgnoreCase(palabra_clave).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -137,11 +136,11 @@ public class ProductServiceImpl implements ProductService {
     private ProductDTO convertToDTO(Product product) {
         ProductDTO dto = new ProductDTO();
         dto.setId(product.getId());
-        dto.setName(product.getName());
-        dto.setDescription(product.getDescription());
-        dto.setPrice(product.getPrice());
+        dto.setNombre(product.getNombre());
+        dto.setDescripcion(product.getDescripcion());
+        dto.setPrecio(product.getPrecio());
         dto.setStock(product.getStock());
-        dto.setImageUrl(product.getImageUrl());
+        dto.setImagenUrl(product.getImagenUrl());
         if (product.getCategoria() != null) {
             dto.setCategoriaId(product.getCategoria().getId());
         }
