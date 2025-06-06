@@ -1,31 +1,41 @@
 <nav class="navbar">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=account_circle" />
+
   <div class="navbar-left">
     <a routerLink="/home" class="logo-button">
       <img src="http://imgfz.com/i/v1MdXnP.png" alt="Click&Go Logo" class="logo" />
     </a>
 
-  
     <div class="ubicacion">
       <span class="material-icons">location_on</span>
       <span> Mi Ubicación</span>
     </div>
   </div>
 
-  
   <div class="navbar-center">
-    <input type="text" placeholder="Buscar Producto" class="search-input" />
-    <button class="search-button">
+    <input [(ngModel)]="searchTerm" type="text" placeholder="Buscar Producto" class="search-input" />
+    <button (click)="onSearch()" class="search-button">
       <span class="material-icons">search</span>
     </button>
   </div>
-
   
-  <div class="acciones">
-    <a href="/register"><button class="btn-light">Regístrate</button></a>
-    <a href="/login"><button class="btn-light">Acceder</button></a>
+  <div class="acciones" *ngIf="!isAuthenticated">
+  <a routerLink="/register"><button class="btn-light">Regístrate</button></a>
+  <a routerLink="/login"><button class="btn-light">Acceder</button></a>
+</div>
+
+<div class="acciones" *ngIf="isAuthenticated">
+  <div class="profile-wrapper">
+    <button class="profile-button" (click)="toggleProfileMenu()"><span class="material-symbols-outlined">
+account_circle
+</span>Perfil</button>
+
+    <div *ngIf="showProfileMenu" class="profile-menu">
+      <a routerLink="/perfil">Configurar perfil</a>
+      <button (click)="logout()">Cerrar sesión</button>  
+    </div>
   </div>
+</div>
+
 </nav>
-
-
