@@ -1,0 +1,68 @@
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            mvc:
+                routes:
+                    - id: usuarios-service
+                      uri: lb://usuarios-service
+                      predicates:
+                        - Path=/usuarios/**,/auth/**
+                    - id: ordenes-service
+                      uri: lb://ordenes-service
+                      predicates:
+                        - Path=/api/ordenes/**
+                    - id: productos-service
+                      uri: lb://productos-service
+                      predicates:
+                        - Path=/api/productos/**,/categorias/**
+                    - id: entregas-service
+                      uri: lb://entregas-service
+                      predicates:
+                        - Path=/api/entregas/**
+    zipkin:
+        enabled: true
+        base-url: http://localhost:9411
+    sleuth:
+        enabled: false
+
+server:
+    port: 9000
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka/
+        fetch-registry: true
+        register-with-eureka: true
+        webclient:
+            enabled: true
+    instance:
+        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+management:
+    tracing:
+        sampling:
+            probability: 1.0
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+
+logging:
+    pattern:
+        level: "%5p [${spring.application.name}, %X{traceId:-},%X{spanId:-}]"
+  
+# level:
+#   root: info
+#   org.springframework.cloud.gateway: debug
+#   org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: debug
+
+# eureka:
+#   client:
+#     healthcheck:
+#       enabled: true
+#   instance:
+#     lease-renewal-interval-in-seconds: 30
+#     lease-expiration-duration-in-seconds: 90
