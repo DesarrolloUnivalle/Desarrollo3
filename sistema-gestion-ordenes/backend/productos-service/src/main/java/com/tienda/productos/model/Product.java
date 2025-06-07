@@ -1,21 +1,16 @@
 package com.tienda.productos.model;
 
-
-
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "productos")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Product {
     
     @Id
@@ -27,9 +22,10 @@ public class Product {
     private Double precio;
     private Integer stock;
     
-    
     @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    @JsonBackReference // Evita la recursión infinita
+    @JoinColumn(name = "categoria_id")
+    @JsonBackReference
     private Categoria categoria;
+    
+    private String imagenUrl;
 }
