@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: usuarios-service-container
-        image: ${{ secrets.DOCKER_USERNAME }}/usuarios-service:latest
+        image: ${DOCKER_USERNAME}/usuarios-service:latest
         ports:
         - containerPort: 8080
         env:
