@@ -81,12 +81,12 @@ jobs:
         run: |
           # Esperar a que el servicio esté listo
           sleep 30
-          # Obtener URL del servicio
-          SERVICE_URL=$(minikube service ${{ env.SERVICE_NAME }}-service --url)
+          # Obtener la IP de Minikube
+          MINIKUBE_IP=$(minikube ip)
           # Verificar health endpoint
-          curl -sSf $SERVICE_URL/actuator/health
+          curl -sSf http://$MINIKUBE_IP:30080/actuator/health
           # Verificar prometheus endpoint
-          curl -sSf $SERVICE_URL/actuator/prometheus | head -n 5
+          curl -sSf http://$MINIKUBE_IP:30080/actuator/prometheus | head -n 5
 
       - name: Cleanup
         if: always()
