@@ -14,6 +14,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 
@@ -25,6 +28,6 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false)
-    private Role rol;  // Aquí ahora usamos un objeto Role
+    @JoinColumn(name = "rol_id")
+    private Role rol;
 }

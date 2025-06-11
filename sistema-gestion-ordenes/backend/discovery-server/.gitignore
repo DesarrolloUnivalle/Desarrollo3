@@ -1,0 +1,38 @@
+# === General ===
+*.log
+*.tmp
+*.swp
+Thumbs.db
+
+# === Java / Maven / Spring Boot ===
+**/target/
+**/*.jar
+**/*.war
+**/*.iml
+.mvn/
+.settings/
+.classpath
+.project
+
+# === IntelliJ IDEA por si alguien esta trabajando ahi ===
+.idea/
+*.iws
+*.ipr
+
+
+# === OS metadata ===
+ehthumbs.db
+desktop.ini
+
+
+# === Docker ===
+**/.docker/
+**/docker-compose.override.yml
+
+# Pero mantenemos el principal:
+!docker-compose.yml
+
+# === Optional ===
+# Ignorar archivos temporales que puedan aparecer por errores
+**/*~ 
+**/#*#

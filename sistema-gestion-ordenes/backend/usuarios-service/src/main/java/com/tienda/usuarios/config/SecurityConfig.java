@@ -1,6 +1,5 @@
 package com.tienda.usuarios.config;
 
-import com.tienda.usuarios.security.AuthFilter;
 import com.tienda.usuarios.security.JwtAuthFilter;
 import com.tienda.usuarios.security.JwtUtil;
 
@@ -20,9 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+
+
+
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig {
 
     private final JwtUtil jwtUtil;
@@ -39,19 +45,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthFilter jwtAuthenticationFilter() {
-        return new AuthFilter(jwtUtil, userDetailsService);
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())  // Desactiva CSRF
+            .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Usa JWT sin sesiones
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/login", "/auth/register").permitAll() // Permitir acceso sin token a login y registro
-                .requestMatchers("/usuarios/**").authenticated() // Restringir acceso a /usuarios/**
-                .anyRequest().permitAll() // Permite TODAS las demás rutas que no están mencionadas arriba
+                .requestMatchers("/auth/login", "/auth/register").permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN") 
+                .requestMatchers("/repartidor/**").hasRole("REPARTIDOR")
+                .requestMatchers("/usuarios/*/internal").permitAll()
+                .requestMatchers("/usuarios/**").authenticated()
+                .anyRequest().permitAll()
                 
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

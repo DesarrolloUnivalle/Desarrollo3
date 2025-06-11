@@ -26,69 +26,82 @@ public class UserService {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
-    public User registerUser(User user) {
-        // Buscar el rol en la BD (por defecto "Cliente" si no envían otro)
-        Role defaultRole = roleRepository.findByNombre(user.getRol().getNombre())
-            .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
-
-        // Asignar el rol al usuario
-        user.setRol(defaultRole);
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // Cifrar la contraseña
-
-        return userRepository.save(user);
-    }
-
+    
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
-        UserResponseDTO response = new UserResponseDTO();
-        response.setId(user.getId());
-        response.setNombre(user.getNombre());
-        response.setEmail(user.getEmail());
-        response.setRol(user.getRol().getNombre());
-        
-        return response;
+
+        return new UserResponseDTO(
+            user.getUsuarioId(), // Cambiar para devolver "usuarioId"
+            user.getNombre(),
+            user.getEmail(),
+            user.getRol().getNombre()
+        );
     }
+
+    // Metodo para obtener el usuario por el email
+    public UserResponseDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        return new UserResponseDTO(
+            user.getUsuarioId(), // Cambiar para devolver "usuarioId"
+            user.getNombre(),
+            user.getEmail(),
+            user.getRol().getNombre()
+        );
+    }
+
+
     
     public UserResponseDTO registrarUsuario(UserRequestDTO request) {
-        Optional<User> usuarioExistente = userRepository.findByEmail(request.getEmail());
+        Optional<User> usuarioExistente = userRepository.findByEmail(request.email());
         if (usuarioExistente.isPresent()) {
             throw new IllegalArgumentException("El correo ya está registrado");
         }
-        System.out.println("🔍 Buscando rol en la BD con nombre: [" + request.getRol().getNombre() + "]");
+        System.out.println("Buscando rol en la BD con nombre: [" + request.rol().getNombre() + "]");
         List<Role> roles = roleRepository.findAll();
-        System.out.println("🔍 Roles en la base de datos: " + roles);
+        System.out.println("Roles en la base de datos: " + roles);
         
         // Buscar el rol en la base de datos
-        Role role = roleRepository.findByNombre(request.getRol().getNombre())
-                .orElseThrow(() -> new IllegalArgumentException("🚨 El rol no existe en la base de datos: " + request.getRol().getNombre()));
+        Role role = roleRepository.findByNombre(request.rol().getNombre())
+                .orElseThrow(() -> new IllegalArgumentException("El rol no existe en la base de datos: " + request.rol().getNombre()));
 
         
-        System.out.println("✅ Resultado de la búsqueda: " + role);
+        System.out.println("Resultado de la búsqueda: " + role);
     
         // Crear usuario
         User user = new User();
-        user.setNombre(request.getNombre());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword())); // Encriptar contraseña
+        user.setNombre(request.nombre());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password())); // Encriptar contraseña
         user.setRol(role);
+        
+        // Generar un usuario_id único
+        Long maxUsuarioId = userRepository.findAll().stream()
+                .map(User::getUsuarioId)
+                .max(Long::compareTo)
+                .orElse(0L);
+        user.setUsuarioId(maxUsuarioId + 1);
     
         // Guardar en la base de datos
         user = userRepository.save(user);
     
-        // ✅ Crear respuesta asegurándonos de que el rol se maneja como String
-        UserResponseDTO response = new UserResponseDTO();
-        response.setId(user.getId());
-        response.setNombre(user.getNombre());
-        response.setEmail(user.getEmail());
-        response.setRol(user.getRol().getNombre()); // 🔥 Extraer solo el nombre del rol
-    
-        return response;
+        // Crear respuesta
+        return new UserResponseDTO(
+            user.getId(),
+            user.getNombre(),
+            user.getEmail(),
+            user.getRol().getNombre()
+        );
     }
-    
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        userRepository.delete(user);
+    }    
 }
