@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{SERVICE_NAME}}-service
+  name: usuarios-service-service
 spec:
   selector:
-    app: {{SERVICE_NAME}}
+    app: usuarios-service
   ports:
     - protocol: TCP
       port: 80
