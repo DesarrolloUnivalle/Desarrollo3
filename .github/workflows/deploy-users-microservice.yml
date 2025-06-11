@@ -2,11 +2,16 @@ name: Deploy Usuarios Service
 
 on:
   push:
-    branches: [develop, test-workflow]
+    branches:
+      - develop
+      - test-workflow
     paths:
       - 'sistema-gestion-ordenes/backend/usuarios-service/**'
   pull_request:
-    branches: [develop, main]
+    branches: 
+      - develop
+      - main
+      - test-workflow
 
 env:
   SERVICE_NAME: usuarios-service
