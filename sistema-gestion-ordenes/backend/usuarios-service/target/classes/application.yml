@@ -44,15 +44,27 @@ springdoc:
     enabled: true
     path: /doc/swagger-ui.html
 
-# Tracing
+# Tracing y Management
 management:
-    tracing:
-        sampling:
-            probability: 1.0
-    endpoints:
-        web:
-            exposure:
-              include: "*"
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+  health:
+    probes:
+      enabled: true
+    status:
+      http-mapping:
+        DOWN: 503
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
 
 logging:
   level:
