@@ -70,13 +70,16 @@ jobs:
           # Aplicar los manifiestos de Kubernetes
           kubectl apply -f ${{ env.K8S_DIR }}/deployment.yml
           kubectl apply -f ${{ env.K8S_DIR }}/service.yml
+          # Verificar el estado de los pods
+          kubectl get pods
+          kubectl describe pods
           # Esperar a que el despliegue esté listo
-          kubectl rollout status deployment/${{ env.SERVICE_NAME }}-deployment --timeout=90s
+          kubectl rollout status deployment/${{ env.SERVICE_NAME }}-deployment --timeout=120s
 
       - name: Verify deployment
         run: |
           # Esperar a que el servicio esté listo
-          sleep 15
+          sleep 30
           # Obtener URL del servicio
           SERVICE_URL=$(minikube service ${{ env.SERVICE_NAME }}-service --url)
           # Verificar health endpoint
