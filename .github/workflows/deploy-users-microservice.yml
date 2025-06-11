@@ -65,6 +65,8 @@ jobs:
           eval $(minikube -p minikube docker-env)
           # Construir la imagen en el entorno de Minikube
           docker build -t ${{ env.DOCKER_IMAGE }}:latest sistema-gestion-ordenes/backend/${{ env.SERVICE_NAME }}
+          # Reemplazar variables en los archivos de Kubernetes
+          sed -i "s|\${{ secrets.DOCKER_USERNAME }}|${{ secrets.DOCKER_USERNAME }}|g" ${{ env.K8S_DIR }}/deployment.yml
           # Aplicar los manifiestos de Kubernetes
           kubectl apply -f ${{ env.K8S_DIR }}/deployment.yml
           kubectl apply -f ${{ env.K8S_DIR }}/service.yml
